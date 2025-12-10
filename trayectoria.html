@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trayectoria - JREdesign</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Configuración ligera de Tailwind -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        zinc: {
+                            850: '#1f1f22',
+                            950: '#0c0c0e',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+        /* --- VARIABLES DEL EFECTO ELÉCTRICO --- */
+        :root {
+            /* Usamos el azul eléctrico del ejemplo */
+            --electric-border-color: #3aa3ff;
+            /* Fallback para navegadores que no soporten oklch */
+            --electric-light-color: #8ccaff; 
+            --color-neutral-900: #18181b; /* Zinc-900 approx */
+        }
+        
+        /* Soporte moderno para colores */
+        @supports (color: oklch(0 0 0)) {
+            :root {
+                --electric-light-color: oklch(from var(--electric-border-color) l c h);
+                --gradient-color: oklch(from var(--electric-border-color) 0.3 calc(c / 2) h / 0.4);
+                --color-neutral-900: oklch(0.185 0 0);
+            }
+        }
+
+        body {
+            background-color: #09090b;
+            color: white;
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        /* Fondo de grilla sutil */
+        .bg-grid-pattern {
+            background-image: radial-gradient(#3f3f46 1px, transparent 1px);
+            background-size: 32px 32px;
+        }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #09090b; }
+        ::-webkit-scrollbar-thumb { background: #27272a; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #3f3f46; }
+
+        /* Degradado texto */
+        .bg-cotton-candy {
+            background-image: linear-gradient(
+                to right,
+                #f472b6 0%,
+                #60a5fa 25%,
+                #fff5fa 50%,
+                #60a5fa 75%,
+                #f472b6 100%
+            );
+        }
+
+        .animate-shine {
+            background-size: 200% auto;
+            animation: shine 4s linear infinite;
+        }
+
+        @keyframes shine {
+            0%   { background-position: 0% center; }
+            100% { background-position: 200% center; }
+        }
+
+        /* Animaciones */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+        .fade-in-up.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* TIMELINE CSS PERSONALIZADO */
+        .timeline-wrapper {
+            position: relative;
+            padding: 2rem 0;
+            width: 100%;
+        }
+
+        /* Línea Central */
+        .timeline-line-container {
+            position: absolute;
+            left: 24px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #27272a;
+            z-index: 0;
+        }
+        
+        .timeline-progress {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(to bottom, #3b82f6, #60a5fa, #f472b6);
+            height: 0;
+            max-height: 100%;
+            transition: height 0.1s linear;
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 4rem;
+            width: 100%;
+            display: flex;
+            opacity: 0;
+            transition: all 0.8s ease-out;
+        }
+
+        .timeline-item.is-visible {
+            opacity: 1;
+            transform: translateX(0) !important;
+        }
+
+        /* Icono (punto) */
+        .timeline-dot {
+            position: absolute;
+            left: 24px;
+            top: 0;
+            transform: translateX(-50%);
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #09090b;
+            border: 2px solid #3b82f6;
+            z-index: 10;
+            box-shadow: 0 0 0 4px rgba(9, 9, 11, 1);
+            transition: all 0.3s ease;
+        }
+
+        /* Contenido (Tarjeta Standard) */
+        .timeline-content {
+            margin-left: 60px;
+            padding: 1.5rem;
+            background: rgba(39, 39, 42, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            backdrop-filter: blur(8px);
+            width: calc(100% - 60px);
+            transition: all 0.4s ease;
+            position: relative;
+        }
+
+        /* --- ESTILOS ACTIVOS (Borde iluminado Standard) --- */
+        .timeline-item.active .timeline-content {
+            background: rgba(39, 39, 42, 0.7);
+            border-right: 2px solid #3b82f6;
+            box-shadow: 10px 0 20px -5px rgba(59, 130, 246, 0.2);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .timeline-item.active .timeline-dot {
+            background: #3b82f6;
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.6), 0 0 0 4px #09090b;
+        }
+
+
+        /* =========================================
+           ESTILOS EFECTO ELÉCTRICO (Última Tarjeta)
+           ========================================= */
+        
+        /* Contenedor relativo para posicionar capas */
+        .electric-card-container {
+            position: relative;
+            border-radius: 12px; /* Coincide con timeline-content */
+            overflow: visible; /* Necesario para que el glow salga */
+        }
+
+        /* Capa contenedora de los efectos */
+        .electric-layers {
+            position: absolute;
+            top: -2px; left: -2px; right: -2px; bottom: -2px;
+            border-radius: 14px;
+            pointer-events: none;
+            opacity: 0; /* Oculto por defecto */
+            transition: opacity 1.5s ease-in-out; /* Transición suave al aparecer */
+        }
+
+        /* Capa exterior con el filtro SVG */
+        .electric-border-outer {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            border: 2px solid rgba(58, 163, 255, 0.5);
+            border-radius: 14px;
+        }
+
+        .electric-main-card {
+            width: 100%;
+            height: 100%;
+            border-radius: 14px;
+            border: 2px solid var(--electric-border-color);
+            filter: url(#turbulent-displace);
+            opacity: 0.8;
+        }
+
+        /* Glows */
+        .electric-glow-1 {
+            position: absolute;
+            inset: 0;
+            border: 2px solid rgba(58, 163, 255, 0.6);
+            border-radius: 14px;
+            filter: blur(2px);
+        }
+        .electric-glow-2 {
+            position: absolute;
+            inset: 0;
+            border: 2px solid var(--electric-light-color);
+            border-radius: 14px;
+            filter: blur(6px);
+        }
+
+        /* Estado ACTIVADO (Clase especial que se queda puesta) */
+        .timeline-item.electric-active .electric-layers {
+            opacity: 1;
+        }
+
+        /* Sobreescribimos el borde standard cuando está activo el eléctrico */
+        .timeline-item.electric-active .timeline-content {
+            background: rgba(39, 39, 42, 0.8);
+            border-color: transparent; /* Quitamos borde normal */
+            box-shadow: 0 0 30px rgba(58, 163, 255, 0.15); /* Glow ambiental central */
+        }
+        
+        /* El punto también se queda azul permanente */
+        .timeline-item.electric-active .timeline-dot {
+            background: var(--electric-border-color);
+            box-shadow: 0 0 20px var(--electric-border-color), 0 0 0 4px #09090b;
+            border-color: white;
+        }
+
+        /* ========================================= */
+
+
+        /* --- DESKTOP LOGIC (md) --- */
+        @media (min-width: 768px) {
+            .timeline-line-container {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+
+            .timeline-dot {
+                left: 50%;
+                width: 20px;
+                height: 20px;
+                top: 24px;
+            }
+
+            .timeline-item {
+                width: 50%;
+            }
+
+            /* Flechas/Conectores */
+            .timeline-content::after {
+                content: '';
+                position: absolute;
+                top: 24px;
+                width: 0; 
+                height: 0; 
+                border-top: 8px solid transparent;
+                border-bottom: 8px solid transparent; 
+                transition: border-color 0.3s ease;
+            }
+
+            /* IMPARES (Izquierda) */
+            .timeline-item:nth-child(odd) {
+                margin-left: 0;
+                margin-right: auto;
+                padding-right: 40px;
+                text-align: right;
+                justify-content: flex-end;
+                transform: translateX(-30px);
+            }
+
+            .timeline-item:nth-child(odd) .timeline-content {
+                margin-left: 0;
+                width: 100%;
+                max-width: 450px;
+                box-shadow: none; 
+                border-right: 1px solid rgba(255, 255, 255, 0.05);
+            }
+
+            .timeline-item:nth-child(odd) .timeline-content::after {
+                right: -8px;
+                border-left: 8px solid rgba(255, 255, 255, 0.1);
+            }
+            
+            /* Standard Active (Left) */
+            .timeline-item:nth-child(odd).active:not(.electric-active) .timeline-content {
+                border-right: 1px solid rgba(255, 255, 255, 0.05);
+                border-left: 3px solid #3b82f6;
+                box-shadow: -15px 0 30px -10px rgba(59, 130, 246, 0.25);
+            }
+
+            /* PARES (Derecha) */
+            .timeline-item:nth-child(even) {
+                margin-left: auto;
+                margin-right: 0;
+                padding-left: 40px;
+                text-align: left;
+                justify-content: flex-start;
+                transform: translateX(30px);
+            }
+
+            .timeline-item:nth-child(even) .timeline-content {
+                margin-left: 0;
+                width: 100%;
+                max-width: 450px;
+            }
+
+            .timeline-item:nth-child(even) .timeline-content::after {
+                left: -8px;
+                border-right: 8px solid rgba(255, 255, 255, 0.1);
+            }
+
+            /* Standard Active (Right) */
+            .timeline-item:nth-child(even).active:not(.electric-active) .timeline-content {
+                border-right: 3px solid #3b82f6;
+                box-shadow: 15px 0 30px -10px rgba(59, 130, 246, 0.25);
+            }
+
+            /* AJUSTE PARA ELÉCTRICO EN DESKTOP */
+            /* Si es eléctrico activo, quitamos los bordes laterales normales para dejar solo el glow envolvente */
+            .timeline-item.electric-active .timeline-content {
+                border-left: none !important;
+                border-right: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SVG FILTER (Oculto) -->
+    <svg style="position: absolute; width: 0; height: 0; overflow: hidden;" aria-hidden="true">
+        <defs>
+          <filter id="turbulent-displace" x="-20%" y="-20%" width="140%" height="140%">
+            <feTurbulence type="turbulence" baseFrequency="0.02" numOctaves="10" seed="1" result="noise1" />
+            <feOffset in="noise1" dx="0" dy="0" result="offsetNoise1">
+              <animate attributeName="dy" values="700; 0" dur="6s" repeatCount="indefinite" />
+            </feOffset>
+            <feTurbulence type="turbulence" baseFrequency="0.02" numOctaves="10" seed="1" result="noise2" />
+            <feOffset in="noise2" dx="0" dy="0" result="offsetNoise2">
+              <animate attributeName="dy" values="0; -700" dur="6s" repeatCount="indefinite" />
+            </feOffset>
+            <feTurbulence type="turbulence" baseFrequency="0.02" numOctaves="10" seed="2" result="noise3" />
+            <feOffset in="noise3" dx="0" dy="0" result="offsetNoise3">
+              <animate attributeName="dx" values="490; 0" dur="6s" repeatCount="indefinite" />
+            </feOffset>
+            <feTurbulence type="turbulence" baseFrequency="0.02" numOctaves="10" seed="2" result="noise4" />
+            <feOffset in="noise4" dx="0" dy="0" result="offsetNoise4">
+              <animate attributeName="dx" values="0; -490" dur="6s" repeatCount="indefinite" />
+            </feOffset>
+            <feComposite in="offsetNoise1" in2="offsetNoise2" result="part1" />
+            <feComposite in="offsetNoise3" in2="offsetNoise4" result="part2" />
+            <feBlend in="part1" in2="part2" mode="color-dodge" result="combinedNoise" />
+            <feDisplacementMap in="SourceGraphic" in2="combinedNoise" scale="30" xChannelSelector="R" yChannelSelector="B" />
+          </filter>
+        </defs>
+    </svg>
+
+
+    <!-- Fondo -->
+    <div class="fixed inset-0 z-0 opacity-20 pointer-events-none bg-grid-pattern"></div>
+    <div class="fixed inset-0 z-0 bg-[radial-gradient(circle_at_center,transparent_0%,#09090b_100%)] pointer-events-none"></div>
+
+    <main class="relative z-10 min-h-screen flex flex-col items-center justify-start px-6 py-24">
+        
+        <section id="trayectoria" class="max-w-6xl w-full">
+            
+            <!-- Título -->
+            <div class="flex flex-col items-center mb-24 text-center">
+                <span class="text-blue-500 font-semibold tracking-wider text-sm uppercase mb-2 fade-in-up">Mi experiencia</span>
+                <h2 class="text-5xl md:text-7xl font-extrabold bg-clip-text text-transparent bg-cotton-candy animate-shine fade-in-up" style="transition-delay: 100ms;">
+                    Trayectoria
+                </h2>
+                <div class="h-1 w-24 bg-gradient-to-r from-blue-500 to-purple-500 mt-6 rounded-full fade-in-up" style="transition-delay: 200ms;"></div>
+            </div>
+
+            <!-- Métricas -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-12 mb-32 w-full max-w-4xl mx-auto">
+                <div class="flex flex-col items-center text-center p-6 rounded-2xl bg-zinc-900/50 border border-white/5 fade-in-up hover:border-blue-500/30 transition-colors duration-300">
+                    <span class="text-4xl md:text-5xl font-bold text-white mb-2">50+</span>
+                    <span class="text-sm font-medium text-zinc-400">Proyectos</span>
+                </div>
+                <div class="flex flex-col items-center text-center p-6 rounded-2xl bg-zinc-900/50 border border-white/5 fade-in-up" style="transition-delay: 100ms;">
+                    <span class="text-4xl md:text-5xl font-bold text-white mb-2">8+</span>
+                    <span class="text-sm font-medium text-zinc-400">Años Exp.</span>
+                </div>
+                <div class="flex flex-col items-center text-center p-6 rounded-2xl bg-zinc-900/50 border border-white/5 fade-in-up" style="transition-delay: 200ms;">
+                    <span class="text-4xl md:text-5xl font-bold text-white mb-2">100%</span>
+                    <span class="text-sm font-medium text-zinc-400">Compromiso</span>
+                </div>
+                <div class="flex flex-col items-center text-center p-6 rounded-2xl bg-zinc-900/50 border border-white/5 fade-in-up" style="transition-delay: 300ms;">
+                    <span class="text-4xl md:text-5xl font-bold text-white mb-2">35+</span>
+                    <span class="text-sm font-medium text-zinc-400">Clientes</span>
+                </div>
+            </div>
+
+            <!-- TIMELINE ESTRUCTURA -->
+            <div class="timeline-wrapper">
+                
+                <!-- Línea central y barra de progreso -->
+                <div class="timeline-line-container">
+                    <div class="timeline-progress"></div>
+                </div>
+
+                <!-- 1. Becario -->
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <span class="text-blue-400 font-mono text-xs font-bold tracking-wide uppercase mb-2 block">2012 - 2013</span>
+                        <h3 class="text-2xl font-bold text-white mb-1">Becario de Diseño</h3>
+                        <h4 class="text-sm font-semibold text-zinc-300 uppercase tracking-wider mb-3">Universidad Local</h4>
+                        <p class="text-zinc-400 leading-relaxed text-sm md:text-base">
+                            Primer contacto con el mundo profesional. Apoyo al departamento de comunicación en la creación de cartelería y maquetación editorial.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 2. Junior -->
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <span class="text-blue-400 font-mono text-xs font-bold tracking-wide uppercase mb-2 block">2013 - 2015</span>
+                        <h3 class="text-2xl font-bold text-white mb-1">Junior Designer</h3>
+                        <h4 class="text-sm font-semibold text-zinc-300 uppercase tracking-wider mb-3">Agencia Creativa Beta</h4>
+                        <p class="text-zinc-400 leading-relaxed text-sm md:text-base">
+                            Diseño de banners, newsletters y retoque fotográfico. Aprendizaje intensivo de flujos de trabajo en agencia y trato con cliente.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 3. Freelance -->
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <span class="text-blue-400 font-mono text-xs font-bold tracking-wide uppercase mb-2 block">2015 - 2017</span>
+                        <h3 class="text-2xl font-bold text-white mb-1">Freelance Designer</h3>
+                        <h4 class="text-sm font-semibold text-zinc-300 uppercase tracking-wider mb-3">Trabajo Independiente</h4>
+                        <p class="text-zinc-400 leading-relaxed text-sm md:text-base">
+                            Etapa de autonomía gestionando proyectos completos para PYMES: desde el branding hasta la implementación web en WordPress.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 4. UI Specialist -->
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <span class="text-blue-400 font-mono text-xs font-bold tracking-wide uppercase mb-2 block">2017 - 2019</span>
+                        <h3 class="text-2xl font-bold text-white mb-1">UI Specialist</h3>
+                        <h4 class="text-sm font-semibold text-zinc-300 uppercase tracking-wider mb-3">StartUp Alpha</h4>
+                        <p class="text-zinc-400 leading-relaxed text-sm md:text-base">
+                            Foco total en interfaces digitales. Creación de prototipos de alta fidelidad en Figma y colaboración estrecha con desarrolladores.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 5. Frontend -->
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <span class="text-blue-400 font-mono text-xs font-bold tracking-wide uppercase mb-2 block">2019 - 2021</span>
+                        <h3 class="text-2xl font-bold text-white mb-1">Frontend Developer</h3>
+                        <h4 class="text-sm font-semibold text-zinc-300 uppercase tracking-wider mb-3">Tech Solutions Inc.</h4>
+                        <p class="text-zinc-400 leading-relaxed text-sm md:text-base">
+                            Salto al código. Desarrollo de componentes en React, implementación de diseños pixel-perfect y optimización de rendimiento web.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 6. UX/UI Lead -->
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <span class="text-blue-400 font-mono text-xs font-bold tracking-wide uppercase mb-2 block">2021 - 2023</span>
+                        <h3 class="text-2xl font-bold text-white mb-1">UX/UI Lead</h3>
+                        <h4 class="text-sm font-semibold text-zinc-300 uppercase tracking-wider mb-3">Digital Agency X</h4>
+                        <p class="text-zinc-400 leading-relaxed text-sm md:text-base">
+                            Gestión de equipo de diseño (3 personas). Definición de procesos de diseño, auditorías de usabilidad y estrategia de producto.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 7. Senior Product Designer (CON EFECTO ELÉCTRICO) -->
+                <div class="timeline-item" id="last-card">
+                    <div class="timeline-dot"></div>
+                    
+                    <!-- Contenedor del contenido + Efectos -->
+                    <div class="timeline-content electric-card-container">
+                        
+                        <!-- Capas del Efecto Eléctrico (Absolutas, detrás del texto) -->
+                        <div class="electric-layers">
+                            <div class="electric-border-outer">
+                                <div class="electric-main-card"></div>
+                            </div>
+                            <div class="electric-glow-1"></div>
+                            <div class="electric-glow-2"></div>
+                        </div>
+
+                        <!-- Contenido Real (Relativo, encima del efecto) -->
+                        <div class="relative z-10">
+                            <!-- Fecha en azul eléctrico para hacer match -->
+                            <span class="text-[var(--electric-border-color)] font-mono text-xs font-bold tracking-wide uppercase mb-2 block">2023 - Presente</span>
+                            <h3 class="text-2xl font-bold text-white mb-1">Senior Product Designer</h3>
+                            <h4 class="text-sm font-semibold text-zinc-300 uppercase tracking-wider mb-3">Global Tech Corp</h4>
+                            <p class="text-zinc-400 leading-relaxed text-sm md:text-base">
+                                Liderando la visión de producto end-to-end. Creación de Sistemas de Diseño escalables a nivel global y mentoría de perfiles junior.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <!-- Scripts -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // Intersection Observer (Fade in initial)
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.15
+            };
+
+            const observer = new IntersectionObserver((entries, obs) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        obs.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.fade-in-up').forEach(el => observer.observe(el));
+            document.querySelectorAll('.timeline-item').forEach(el => observer.observe(el));
+
+            // Lógica de Scroll Timeline
+            const wrapper = document.querySelector('.timeline-wrapper');
+            const progressLine = document.querySelector('.timeline-progress');
+            const items = document.querySelectorAll('.timeline-item');
+            const lastItem = items[items.length - 1]; // Referencia al último item
+
+            // Bandera para saber si el efecto eléctrico ya se activó
+            let electricEffectTriggered = false;
+
+            if (wrapper && progressLine) {
+                const updateProgress = () => {
+                    const rect = wrapper.getBoundingClientRect();
+                    const windowHeight = window.innerHeight;
+                    
+                    const triggerPoint = windowHeight * 0.55; 
+                    const wrapperTop = rect.top;
+                    const wrapperHeight = rect.height;
+
+                    // Progreso Línea
+                    let percentage = (triggerPoint - wrapperTop) / wrapperHeight;
+                    percentage = Math.max(0, Math.min(1, percentage));
+                    progressLine.style.height = `${percentage * 100}%`;
+
+                    const blueLineTip = wrapperTop + (wrapperHeight * percentage);
+
+                    items.forEach((item, index) => {
+                        const itemRect = item.getBoundingClientRect();
+                        const itemTop = itemRect.top;
+                        
+                        // Lógica standard de activación
+                        const isReached = blueLineTip > (itemTop + 20);
+
+                        // Si es el ÚLTIMO ITEM
+                        if (index === items.length - 1) {
+                            // Si se alcanza y aún no se ha disparado el trigger
+                            if (isReached && !electricEffectTriggered) {
+                                electricEffectTriggered = true; // Marcamos como disparado para siempre
+                                item.classList.add('electric-active'); // Clase especial permanente
+                            }
+                            // NOTA: No hay 'else remove', una vez activo, se queda activo.
+                        } else {
+                            // Items normales: se encienden y apagan
+                            if (isReached) {
+                                item.classList.add('active');
+                            } else {
+                                item.classList.remove('active');
+                            }
+                        }
+                    });
+                };
+
+                window.addEventListener('scroll', updateProgress, { passive: true });
+                window.addEventListener('resize', updateProgress);
+                updateProgress();
+            }
+        });
+    </script>
+</body>
+</html>
