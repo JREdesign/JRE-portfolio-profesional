@@ -2,43 +2,14 @@
 <html lang="es" class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
     <title>JREdesign - Portfolio</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Tailwind CSS desde CDN -->
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- Config Tailwind -->
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            animation: {
-              'pulse-slow':
-                'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-              shine: 'shine 6s linear infinite'
-            },
-            keyframes: {
-              shine: {
-                '0%': { backgroundPosition: '0% center' },
-                '100%': { backgroundPosition: '200% center' }
-              }
-            },
-            spacing: {
-              128: '32rem',
-              144: '36rem'
-            },
-            fontFamily: {
-              sans: ['Inter', 'sans-serif']
-            },
-            backgroundImage: {
-              'cotton-candy':
-                'linear-gradient(to right, #f472b6 0%, #60a5fa 15%, #fff5fa 35%, #fff5fa 65%, #60a5fa 85%, #f472b6 100%)'
-            }
-          }
-        }
-      };
-    </script>
 
     <!-- React & ReactDOM -->
     <script
@@ -50,20 +21,50 @@
       src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"
     ></script>
 
-    <!-- Babel para JSX en el navegador -->
+    <!-- Babel para procesar JSX en el navegador -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
-    <!-- Fuente Inter -->
+    <!-- Configuración personalizada de Tailwind -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            animation: {
+              "pulse-slow":
+                "pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+              shine: "shine 6s linear infinite"
+            },
+            keyframes: {
+              shine: {
+                "0%": { backgroundPosition: "0% center" },
+                "100%": { backgroundPosition: "200% center" }
+              }
+            },
+            spacing: {
+              128: "32rem",
+              144: "36rem"
+            },
+            fontFamily: {
+              sans: ["Inter", "sans-serif"]
+            },
+            backgroundImage: {
+              "cotton-candy":
+                "linear-gradient(to right, #f472b6 0%, #60a5fa 15%, #fff5fa 35%, #fff5fa 65%, #60a5fa 85%, #f472b6 100%)"
+            }
+          }
+        }
+      };
+    </script>
+
     <style>
-      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap");
 
       body {
         background-color: #09090b;
         color: white;
-        font-family: 'Inter', sans-serif;
+        font-family: "Inter", sans-serif;
         -webkit-font-smoothing: antialiased;
       }
-
       .bg-grid-pattern {
         background-image: radial-gradient(#52525b 1px, transparent 1px);
         background-size: 32px 32px;
@@ -121,7 +122,7 @@
       .glowing-card::before,
       .glowing-card::after,
       .glowing-card > .glow {
-        content: '';
+        content: "";
         position: absolute;
         inset: 0;
         border-radius: inherit;
@@ -132,8 +133,8 @@
 
       .glowing-card::before {
         border: 1px solid transparent;
-        background: linear-gradient(var(--card-bg) 0 100%)
-            padding-box,
+        background:
+          linear-gradient(var(--card-bg) 0 100%) padding-box,
           linear-gradient(rgba(255, 255, 255, 0) 0% 100%) border-box,
           radial-gradient(
             at 80% 55%,
@@ -169,20 +170,22 @@
 
       .glowing-card::after {
         border: 1px solid transparent;
-        background: radial-gradient(
-              at 80% 55%,
-              hsla(210, 100%, 60%, 1) 0px,
-              transparent 50%
-            )
+        background:
+          radial-gradient(
+            at 80% 55%,
+            hsla(210, 100%, 60%, 1) 0px,
+            transparent 50%
+          )
             padding-box,
           radial-gradient(
-              at 20% 20%,
-              hsla(190, 100%, 70%, 1) 0px,
-              transparent 50%
-            )
+            at 20% 20%,
+            hsla(190, 100%, 70%, 1) 0px,
+            transparent 50%
+          )
             padding-box,
           linear-gradient(#1e40af 0 100%) padding-box;
-        mask-image: linear-gradient(to bottom, black, black),
+        mask-image:
+          linear-gradient(to bottom, black, black),
           conic-gradient(
             from var(--pointer-deg) at center,
             transparent 5%,
@@ -216,7 +219,7 @@
       }
 
       .glowing-card > .glow::before {
-        content: '';
+        content: "";
         position: absolute;
         inset: 0;
         border-radius: inherit;
@@ -280,7 +283,7 @@
           0 8px 24px rgba(15, 23, 42, 0.9),
           0 0 0 1px rgba(255, 255, 255, 0.1);
         transition:
-          transform 0.55s cubic-bezier(.34,1.56,.64,1),
+          transform 0.55s cubic-bezier(0.34, 1.56, 0.64, 1),
           box-shadow 0.35s ease;
         position: relative;
         transform-style: preserve-3d;
@@ -293,10 +296,9 @@
         border-radius: 24px;
         position: relative;
         z-index: 10;
-        filter: drop-shadow(
-          0 4px 6px rgba(0, 0, 0, 0.3)
-        );
-        transition: transform 0.4s
+        filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.3));
+        transition: transform
+          0.4s
           cubic-bezier(0.175, 0.885, 0.32, 1.275);
       }
       .tech-item:not(.ai-item):hover .icon-wrapper {
@@ -326,7 +328,6 @@
           transform: translateY(-2px) rotate(360deg);
         }
       }
-
       .ai-item:hover .icon-wrapper {
         transition:
           transform 0.1s ease-out,
@@ -338,10 +339,10 @@
       }
       .ai-item:hover .full-icon {
         transform: scale(1.6);
-        transition: transform 0.3s
+        transition: transform
+          0.3s
           cubic-bezier(0.175, 0.885, 0.32, 1.275);
       }
-
       .card-shine {
         position: absolute;
         top: 0;
@@ -364,7 +365,6 @@
         pointer-events: none;
         transition: opacity 0.3s;
       }
-
       .card-glare {
         position: absolute;
         top: 0;
@@ -385,14 +385,12 @@
         pointer-events: none;
         transition: opacity 0.3s;
       }
-
       .ai-item:hover .card-shine {
         opacity: 0.6;
       }
       .ai-item:hover .card-glare {
         opacity: 1;
       }
-
       .sparks-container {
         position: absolute;
         inset: 0;
@@ -401,7 +399,6 @@
         z-index: 5;
         pointer-events: none;
       }
-
       .spark {
         position: absolute;
         width: 2px;
@@ -414,7 +411,6 @@
           0 0 10px #00ffff;
         animation: sparkRise 0.6s ease-out forwards;
       }
-
       @keyframes sparkRise {
         0% {
           transform: translateY(0) translateX(0) scale(1);
@@ -427,16 +423,443 @@
           opacity: 1;
         }
         100% {
-          transform: translateY(-100px)
-            translateX(var(--drift))
+          transform: translateY(-100px) translateX(var(--drift))
             scale(0.3);
           opacity: 0;
+        }
+      }
+
+      /* --- TIMELINE --- */
+      :root {
+        --electric-border-color: #3aa3ff;
+        --electric-light-color: #8ccaff;
+        --color-neutral-900: #18181b;
+      }
+
+      @supports (color: oklch(0 0 0)) {
+        :root {
+          --electric-light-color: oklch(
+            from var(--electric-border-color) l c h
+          );
+        }
+      }
+
+      .timeline-wrapper {
+        position: relative;
+        padding: 2rem 0;
+        width: 100%;
+      }
+
+      .timeline-line-container {
+        position: absolute;
+        left: 24px;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: #27272a;
+        z-index: 0;
+      }
+
+      .timeline-progress {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background: linear-gradient(
+          to bottom,
+          #3b82f6,
+          #60a5fa,
+          #f472b6
+        );
+        height: 0;
+        max-height: 100%;
+        transition: height 0.1s linear;
+        box-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
+      }
+
+      .timeline-item {
+        position: relative;
+        margin-bottom: 5rem;
+        width: 100%;
+        display: flex;
+        opacity: 0;
+        transition: all 0.8s ease-out;
+      }
+
+      .timeline-item.is-visible {
+        opacity: 1;
+        transform: translateX(0) !important;
+      }
+
+      .timeline-content {
+        margin-left: 60px;
+        padding: 1.5rem;
+        background: rgba(39, 39, 42, 0.4);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 16px;
+        backdrop-filter: blur(8px);
+        width: calc(100% - 60px);
+        transition: all 0.4s ease;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .logo-container {
+        width: 64px;
+        height: 64px;
+        flex-shrink: 0;
+        border-radius: 12px;
+        background: #18181b;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 8px;
+        transition: all 0.4s ease;
+      }
+
+      .logo-container img,
+      .logo-container svg {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        opacity: 0.7;
+        transition: opacity 0.3s;
+      }
+
+      .text-container {
+        flex-grow: 1;
+      }
+
+      .timeline-item.active .timeline-content {
+        background: rgba(39, 39, 42, 0.7);
+        border-color: rgba(255, 255, 255, 0.1);
+        border-right: 2px solid #3b82f6;
+        box-shadow: 10px 0 20px -5px rgba(59, 130, 246, 0.2);
+      }
+
+      .timeline-item.active .logo-container {
+        border-color: #3b82f6;
+        box-shadow: 0 0 15px rgba(59, 130, 246, 0.3);
+        background: #09090b;
+      }
+
+      .timeline-item.active .logo-container img,
+      .timeline-item.active .logo-container svg {
+        opacity: 1;
+      }
+
+      .electric-card-container {
+        position: relative;
+        border-radius: 24px;
+        overflow: visible;
+        transform-style: preserve-3d;
+      }
+
+      .electric-layers {
+        position: absolute;
+        inset: -4px;
+        border-radius: 24px;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.8s ease-in-out;
+        z-index: 0;
+      }
+
+      .electric-overlay-1 {
+        position: absolute;
+        inset: 0;
+        border-radius: 24px;
+        opacity: 0.25;
+        mix-blend-mode: overlay;
+        transform: scale(1.05);
+        filter: blur(12px);
+        background: linear-gradient(
+          -30deg,
+          white,
+          transparent 30%,
+          transparent 70%,
+          white
+        );
+      }
+
+      .electric-background-glow {
+        position: absolute;
+        inset: 0;
+        border-radius: 24px;
+        filter: blur(28px);
+        transform: scale(1.08);
+        opacity: 0.2;
+        z-index: -1;
+        background: linear-gradient(
+          -30deg,
+          var(--electric-light-color),
+          transparent,
+          var(--electric-border-color)
+        );
+      }
+
+      .electric-border-outer {
+        position: absolute;
+        inset: 0;
+        border: 2px solid rgba(58, 163, 255, 0.5);
+        border-radius: 24px;
+        padding-right: 2px;
+        padding-bottom: 2px;
+      }
+
+      .electric-main-card {
+        width: 100%;
+        height: 100%;
+        border-radius: 24px;
+        border: 2px solid var(--electric-border-color);
+        margin-top: -2px;
+        margin-left: -2px;
+        filter: url(#turbulent-displace);
+        opacity: 0.9;
+      }
+
+      .timeline-item.electric-active .electric-layers {
+        opacity: 1;
+      }
+
+      .timeline-item.electric-active .timeline-content {
+        background: rgba(39, 39, 42, 0.95);
+        border-color: transparent;
+        box-shadow: none;
+      }
+
+      .timeline-item.electric-active .logo-container {
+        border-color: #3aa3ff;
+        box-shadow: 0 0 20px rgba(58, 163, 255, 0.6);
+        background: #0c0c0e;
+        animation: pulse-electric 2s infinite;
+      }
+
+      @keyframes pulse-electric {
+        0% {
+          box-shadow: 0 0 15px rgba(58, 163, 255, 0.4);
+        }
+        50% {
+          box-shadow: 0 0 25px rgba(58, 163, 255, 0.8);
+        }
+        100% {
+          box-shadow: 0 0 15px rgba(58, 163, 255, 0.4);
+        }
+      }
+
+      @media (min-width: 768px) {
+        .timeline-line-container {
+          left: 50%;
+          transform: translateX(-50%);
+        }
+
+        .timeline-item {
+          width: 50%;
+        }
+
+        .timeline-content::after {
+          content: "";
+          position: absolute;
+          top: 32px;
+          transform: translateY(-50%);
+          width: 0;
+          height: 0;
+          border-top: 8px solid transparent;
+          border-bottom: 8px solid transparent;
+          transition: border-color 0.3s ease;
+        }
+
+        .timeline-item:nth-child(odd) {
+          margin-left: 0;
+          margin-right: auto;
+          padding-right: 40px;
+          text-align: right;
+          justify-content: flex-end;
+          transform: translateX(-30px);
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content {
+          width: 100%;
+          max-width: 500px;
+          box-shadow: none;
+          border-right: 1px solid rgba(255, 255, 255, 0.05);
+          flex-direction: row-reverse;
+          align-items: flex-start;
+          gap: 1.5rem;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content::after {
+          right: -8px;
+          border-left: 8px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .timeline-item:nth-child(odd).active:not(.electric-active)
+          .timeline-content {
+          border-right: 1px solid rgba(255, 255, 255, 0.05);
+          border-left: 3px solid #3b82f6;
+          box-shadow: -15px 0 30px -10px rgba(59, 130, 246, 0.25);
+        }
+
+        .timeline-item:nth-child(even) {
+          margin-left: auto;
+          margin-right: 0;
+          padding-left: 40px;
+          text-align: left;
+          justify-content: flex-start;
+          transform: translateX(30px);
+        }
+
+        .timeline-item:nth-child(even) .timeline-content {
+          width: 100%;
+          max-width: 500px;
+          flex-direction: row;
+          align-items: flex-start;
+          gap: 1.5rem;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content::after {
+          left: -8px;
+          border-right: 8px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .timeline-item:nth-child(even).active:not(.electric-active)
+          .timeline-content {
+          border-right: 3px solid #3b82f6;
+          box-shadow: 15px 0 30px -10px rgba(59, 130, 246, 0.25);
+        }
+
+        .timeline-item.electric-active .timeline-content {
+          border-left: none !important;
+          border-right: none !important;
         }
       }
     </style>
   </head>
   <body>
-    <!-- Raíz React -->
+    <!-- Filtro SVG para la tarjeta eléctrica de la timeline -->
+    <svg
+      style="position: absolute; width: 0; height: 0; overflow: hidden"
+      aria-hidden="true"
+    >
+      <defs>
+        <filter
+          id="turbulent-displace"
+          x="-20%"
+          y="-20%"
+          width="140%"
+          height="140%"
+        >
+          <feTurbulence
+            type="turbulence"
+            baseFrequency="0.02"
+            numOctaves="10"
+            seed="1"
+            result="noise1"
+          />
+          <feOffset
+            in="noise1"
+            dx="0"
+            dy="0"
+            result="offsetNoise1"
+          >
+            <animate
+              attributeName="dy"
+              values="700; 0"
+              dur="6s"
+              repeatCount="indefinite"
+            />
+          </feOffset>
+          <feTurbulence
+            type="turbulence"
+            baseFrequency="0.02"
+            numOctaves="10"
+            seed="1"
+            result="noise2"
+          />
+          <feOffset
+            in="noise2"
+            dx="0"
+            dy="0"
+            result="offsetNoise2"
+          >
+            <animate
+              attributeName="dy"
+              values="0; -700"
+              dur="6s"
+              repeatCount="indefinite"
+            />
+          </feOffset>
+          <feTurbulence
+            type="turbulence"
+            baseFrequency="0.02"
+            numOctaves="10"
+            seed="2"
+            result="noise3"
+          />
+          <feOffset
+            in="noise3"
+            dx="0"
+            dy="0"
+            result="offsetNoise3"
+          >
+            <animate
+              attributeName="dx"
+              values="490; 0"
+              dur="6s"
+              repeatCount="indefinite"
+            />
+          </feOffset>
+          <feTurbulence
+            type="turbulence"
+            baseFrequency="0.02"
+            numOctaves="10"
+            seed="2"
+            result="noise4"
+          />
+          <feOffset
+            in="noise4"
+            dx="0"
+            dy="0"
+            result="offsetNoise4"
+          >
+            <animate
+              attributeName="dx"
+              values="0; -490"
+              dur="6s"
+              repeatCount="indefinite"
+            />
+          </feOffset>
+          <feComposite
+            in="offsetNoise1"
+            in2="offsetNoise2"
+            result="part1"
+          />
+          <feComposite
+            in="offsetNoise3"
+            in2="offsetNoise4"
+            result="part2"
+          />
+          <feBlend
+            in="part1"
+            in2="part2"
+            mode="color-dodge"
+            result="combinedNoise"
+          />
+          <feDisplacementMap
+            in="SourceGraphic"
+            in2="combinedNoise"
+            scale="30"
+            xChannelSelector="R"
+            yChannelSelector="B"
+          />
+        </filter>
+      </defs>
+    </svg>
+
+    <!-- Contenedor raíz para React -->
     <div id="root"></div>
 
     <!-- Datos dinámicos -->
@@ -446,35 +869,27 @@
     <script type="text/babel">
       const { useState, useEffect, useRef } = React;
 
-      // =====================
-      //   FUNCIONES UTILES
-      // =====================
-
+      // --- FUNCIONES MATEMÁTICAS ---
       const clamp = (value, min = 0, max = 100) =>
         Math.min(Math.max(value, min), max);
       const round = (value, precision = 3) =>
         parseFloat(value.toFixed(precision));
-
       const centerOfElement = (el) => {
         const { width, height } = el.getBoundingClientRect();
         return [width / 2, height / 2];
       };
-
       const distanceFromCenter = (el, x, y) => {
         const [cx, cy] = centerOfElement(el);
         return [x - cx, y - cy];
       };
-
       const angleFromPointerEvent = (dx, dy) => {
         let angle = 0;
         if (dx !== 0 || dy !== 0) {
-          angle =
-            (Math.atan2(dy, dx) * 180) / Math.PI + 90;
+          angle = (Math.atan2(dy, dx) * 180) / Math.PI + 90;
           if (angle < 0) angle += 360;
         }
         return angle;
       };
-
       const closenessToEdge = (el, x, y) => {
         const [cx, cy] = centerOfElement(el);
         const [dx, dy] = distanceFromCenter(el, x, y);
@@ -488,7 +903,6 @@
           1
         );
       };
-
       const pointerPositionRelativeToElement = (el, e) => {
         const { left, top, width, height } =
           el.getBoundingClientRect();
@@ -503,10 +917,7 @@
         };
       };
 
-      // =====================
-      //   ICONOS SVG
-      // =====================
-
+      // --- ICONOS SVG ---
       const FileText = ({ className }) => (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -527,7 +938,6 @@
           <line x1="10" x2="8" y1="9" y2="9" />
         </svg>
       );
-
       const Database = ({ className }) => (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -539,21 +949,11 @@
           strokeLinejoin="round"
           className={className}
         >
-          <ellipse
-            cx="12"
-            cy="5"
-            rx="9"
-            ry="3"
-          />
-          <path
-            d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"
-          />
-          <path
-            d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"
-          />
+          <ellipse cx="12" cy="5" rx="9" ry="3" />
+          <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3" />
+          <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" />
         </svg>
       );
-
       const Sparkles = ({ className }) => (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -574,7 +974,6 @@
           <path d="M3 5h4" />
         </svg>
       );
-
       const BarChart3 = ({ className }) => (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -592,7 +991,6 @@
           <path d="M8 17v-3" />
         </svg>
       );
-
       const PenTool = ({ className }) => (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -604,21 +1002,14 @@
           strokeLinejoin="round"
           className={className}
         >
-          <path
-            d="m12 19 7-7 3 3-7 7-3-3z"
-          />
+          <path d="m12 19 7-7 3 3-7 7-3-3z" />
           <path
             d="m18 13-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"
           />
           <path d="m2 2 7.586 7.586" />
-          <circle
-            cx="11"
-            cy="11"
-            r="2"
-          />
+          <circle cx="11" cy="11" r="2" />
         </svg>
       );
-
       const Palette = ({ className }) => (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -630,32 +1021,15 @@
           strokeLinejoin="round"
           className={className}
         >
-          <circle
-            cx="13.5"
-            cy="6.5"
-            r=".5"
-          />
-          <circle
-            cx="17.5"
-            cy="10.5"
-            r=".5"
-          />
-          <circle
-            cx="8.5"
-            cy="7.5"
-            r=".5"
-          />
-          <circle
-            cx="6.5"
-            cy="12.5"
-            r=".5"
-          />
+          <circle cx="13.5" cy="6.5" r=".5" />
+          <circle cx="17.5" cy="10.5" r=".5" />
+          <circle cx="8.5" cy="7.5" r=".5" />
+          <circle cx="6.5" cy="12.5" r=".5" />
           <path
             d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.01 17.461 2 12 2z"
           />
         </svg>
       );
-
       const Search = ({ className }) => (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -667,15 +1041,10 @@
           strokeLinejoin="round"
           className={className}
         >
-          <circle
-            cx="11"
-            cy="11"
-            r="8"
-          />
+          <circle cx="11" cy="11" r="8" />
           <path d="m21 21-4.3-4.3" />
         </svg>
       );
-
       const CheckCircle = ({ className }) => (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -690,12 +1059,9 @@
           <path
             d="M22 11.08V12a10 10 0 1 1-5.93-9.14"
           />
-          <polyline
-            points="22 4 12 14.01 9 11.01"
-          />
+          <polyline points="22 4 12 14.01 9 11.01" />
         </svg>
       );
-
       const BadgeCheck = ({ className }) => (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -713,7 +1079,6 @@
           <path d="m9 12 2 2 4-4" />
         </svg>
       );
-
       const Layout = ({ className }) => (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -737,7 +1102,6 @@
           <line x1="9" x2="9" y1="21" y2="9" />
         </svg>
       );
-
       const Code = ({ className }) => (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -749,15 +1113,10 @@
           strokeLinejoin="round"
           className={className}
         >
-          <polyline
-            points="16 18 22 12 16 6"
-          />
-          <polyline
-            points="8 6 2 12 8 18"
-          />
+          <polyline points="16 18 22 12 16 6" />
+          <polyline points="8 6 2 12 8 18" />
         </svg>
       );
-
       const Briefcase = ({ className }) => (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -782,7 +1141,6 @@
           />
         </svg>
       );
-
       const Users = ({ className }) => (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -797,11 +1155,7 @@
           <path
             d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"
           />
-          <circle
-            cx="9"
-            cy="7"
-            r="4"
-          />
+          <circle cx="9" cy="7" r="4" />
           <path
             d="M22 21v-2a4 4 0 0 0-3-3.87"
           />
@@ -810,7 +1164,6 @@
           />
         </svg>
       );
-
       const Award = ({ className }) => (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -825,14 +1178,9 @@
           <path
             d="m15.477 12.89 1.515 8.526a.5.5 0 0 1-.81.47l-3.58-2.687a1 1 0 0 0-1.197 0l-3.586 2.686a.5.5 0 0 1-.81-.469l1.514-8.526"
           />
-          <circle
-            cx="12"
-            cy="8"
-            r="6"
-          />
+          <circle cx="12" cy="8" r="6" />
         </svg>
       );
-
       const Star = ({ className }) => (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -849,7 +1197,6 @@
           />
         </svg>
       );
-
       const Clock = ({ className }) => (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -861,17 +1208,10 @@
           strokeLinejoin="round"
           className={className}
         >
-          <circle
-            cx="12"
-            cy="12"
-            r="10"
-          />
-          <polyline
-            points="12 6 12 12 16 14"
-          />
+          <circle cx="12" cy="12" r="10" />
+          <polyline points="12 6 12 12 16 14" />
         </svg>
       );
-
       const Calendar = ({ className }) => (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -891,27 +1231,11 @@
             rx="2"
             ry="2"
           />
-          <line
-            x1="16"
-            y1="2"
-            x2="16"
-            y2="6"
-          />
-          <line
-            x1="8"
-            y1="2"
-            x2="8"
-            y2="6"
-          />
-          <line
-            x1="3"
-            y1="10"
-            x2="21"
-            y2="10"
-          />
+          <line x1="16" y1="2" x2="16" y2="6" />
+          <line x1="8" y1="2" x2="8" y2="6" />
+          <line x1="3" y1="10" x2="21" y2="10" />
         </svg>
       );
-
       const ArrowRight = ({ className }) => (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -923,18 +1247,10 @@
           strokeLinejoin="round"
           className={className}
         >
-          <line
-            x1="5"
-            y1="12"
-            x2="19"
-            y2="12"
-          />
-          <polyline
-            points="12 5 19 12 12 19"
-          />
+          <line x1="5" y1="12" x2="19" y2="12" />
+          <polyline points="12 5 19 12 12 19" />
         </svg>
       );
-
       const MapPin = ({ className }) => (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -949,14 +1265,9 @@
           <path
             d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"
           />
-          <circle
-            cx="12"
-            cy="10"
-            r="3"
-          />
+          <circle cx="12" cy="10" r="3" />
         </svg>
       );
-
       const Mail = ({ className }) => (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -971,14 +1282,24 @@
           <path
             d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
           />
-          <polyline
-            points="22,6 12,13 2,6"
-          />
+          <polyline points="22,6 12,13 2,6" />
         </svg>
       );
-
-      const ClockIcon = Clock;
-
+      const ClockIcon = ({ className }) => (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className={className}
+        >
+          <circle cx="12" cy="12" r="10" />
+          <polyline points="12 6 12 12 16 14" />
+        </svg>
+      );
       const ExternalLink = ({ className }) => (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -993,22 +1314,12 @@
           <path
             d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"
           />
-          <polyline
-            points="15 3 21 3 21 9"
-          />
-          <line
-            x1="10"
-            y1="14"
-            x2="21"
-            y2="3"
-          />
+          <polyline points="15 3 21 3 21 9" />
+          <line x1="10" y1="14" x2="21" y2="3" />
         </svg>
       );
 
-      // =====================
-      //  LOGO COMPONENTE
-      // =====================
-
+      // LOGO
       const JRELogo = ({ className }) => (
         <img
           src="logo.svg"
@@ -1017,14 +1328,10 @@
         />
       );
 
-      // =====================
-      //  CUSTOM HOOKS
-      // =====================
-
+      // --- HOOK DE INTERSECCIÓN ---
       const useInView = (options) => {
         const ref = useRef(null);
-        const [isInView, setIsInView] =
-          useState(false);
+        const [isInView, setIsInView] = useState(false);
 
         useEffect(() => {
           const observer = new IntersectionObserver(
@@ -1037,8 +1344,8 @@
             options
           );
 
-          if (ref.current)
-            observer.observe(ref.current);
+          if (ref.current) observer.observe(ref.current);
+
           return () => {
             if (ref.current) observer.disconnect();
           };
@@ -1047,10 +1354,7 @@
         return [ref, isInView];
       };
 
-      // =====================
-      //  CARD STYLE GENÉRICA
-      // =====================
-
+      // --- TARJETA SIMPLE ---
       const CardStyle = ({
         icon: Icon,
         title,
@@ -1058,27 +1362,28 @@
         delay,
         centered = true
       }) => {
-        const [ref, isInView] = useInView({
-          threshold: 0.2
-        });
+        const [ref, isInView] = useInView({ threshold: 0.2 });
+
         return (
           <div
             ref={ref}
             className={`transition-all duration-700 transform ${
               isInView
-                ? 'opacity-100 translate-y-0'
-                : 'opacity-0 translate-y-10'
+                ? "opacity-100 translate-y-0"
+                : "opacity-0 translate-y-10"
             }`}
             style={{ transitionDelay: `${delay}ms` }}
           >
             <div
               className={`flex flex-col ${
-                centered
-                  ? 'items-center text-center'
-                  : 'items-start text-left'
+                centered ? "items-center text-center" : "items-start text-left"
               } justify-center p-8 h-full min-h-[280px] rounded-2xl border border-blue-500/60 bg-[linear-gradient(to_bottom,#111111_0%,#06080d_100%)] transition-all duration-300 hover:shadow-[0_0_20px_rgba(59,130,246,0.4)] group hover:-translate-y-1`}
             >
-              <Icon className="w-12 h-12 text-white mb-6 stroke-[1.5] group-hover:scale-110 transition-transform duration-300" />
+              <Icon
+                className={
+                  "w-12 h-12 text-white mb-6 stroke-[1.5] group-hover:scale-110 transition-transform duration-300"
+                }
+              />
               <h3 className="text-white font-bold text-xl mb-3 leading-tight whitespace-pre-line">
                 {title}
               </h3>
@@ -1092,60 +1397,29 @@
         );
       };
 
-      // =====================
-      //  GLOWING SERVICE CARD
-      // =====================
-
-      const GlowingServiceCard = ({
-        title,
-        description,
-        delay
-      }) => {
+      // --- GLOWING SERVICE CARD ---
+      const GlowingServiceCard = ({ title, description, delay }) => {
         const cardRef = useRef(null);
-        const [ref, isInView] = useInView({
-          threshold: 0.2
-        });
+        const [ref, isInView] = useInView({ threshold: 0.2 });
 
         const handlePointerMove = (e) => {
           const card = cardRef.current;
           if (!card) return;
-
           const { pixels, percent } =
-            pointerPositionRelativeToElement(
-              card,
-              e
-            );
+            pointerPositionRelativeToElement(card, e);
           const [px, py] = pixels;
           const [perx, pery] = percent;
-          const [dx, dy] = distanceFromCenter(
-            card,
-            px,
-            py
-          );
-          const edge = closenessToEdge(
-            card,
-            px,
-            py
-          );
-          const angle = angleFromPointerEvent(
-            dx,
-            dy
-          );
-
+          const [dx, dy] = distanceFromCenter(card, px, py);
+          const edge = closenessToEdge(card, px, py);
+          const angle = angleFromPointerEvent(dx, dy);
+          card.style.setProperty("--pointer-x", `${round(perx)}%`);
+          card.style.setProperty("--pointer-y", `${round(pery)}%`);
           card.style.setProperty(
-            '--pointer-x',
-            `${round(perx)}%`
-          );
-          card.style.setProperty(
-            '--pointer-y',
-            `${round(pery)}%`
-          );
-          card.style.setProperty(
-            '--pointer-deg',
+            "--pointer-deg",
             `${round(angle)}deg`
           );
           card.style.setProperty(
-            '--pointer-d',
+            "--pointer-d",
             `${round(edge * 100)}`
           );
         };
@@ -1155,8 +1429,8 @@
             ref={ref}
             className={`glowing-card-wrapper transition-all duration-700 transform ${
               isInView
-                ? 'opacity-100 translate-y-0'
-                : 'opacity-0 translate-y-10'
+                ? "opacity-100 translate-y-0"
+                : "opacity-0 translate-y-10"
             }`}
             style={{ transitionDelay: `${delay}ms` }}
           >
@@ -1165,12 +1439,12 @@
               className="glowing-card group"
               onPointerMove={handlePointerMove}
             >
-              <span className="glow"></span>
+              <span className="glow" />
               <div className="inner">
-                {title.includes('UI') ? (
+                {title.includes("UI") ? (
                   <Layout className="w-12 h-12 text-blue-400 mb-4 stroke-[1.5]" />
-                ) : title.includes('Code') ||
-                  title.includes('Development') ? (
+                ) : title.includes("Code") ||
+                  title.includes("Development") ? (
                   <Code className="w-12 h-12 text-blue-400 mb-4 stroke-[1.5]" />
                 ) : (
                   <BadgeCheck className="w-12 h-12 text-blue-400 mb-4 stroke-[1.5]" />
@@ -1187,14 +1461,9 @@
         );
       };
 
-      // =====================
-      //  SKILL BAR
-      // =====================
-
+      // --- BARRA HABILIDAD ---
       const SkillBar = ({ name, percentage, delay }) => {
-        const [ref, isInView] = useInView({
-          threshold: 0.2
-        });
+        const [ref, isInView] = useInView({ threshold: 0.2 });
 
         return (
           <div ref={ref} className="mb-6 last:mb-0">
@@ -1210,9 +1479,7 @@
               <div
                 className="h-full bg-gradient-to-r from-blue-600 to-cyan-400 rounded-full transition-all duration-[1500ms] ease-out shadow-[0_0_10px_rgba(59,130,246,0.5)]"
                 style={{
-                  width: isInView
-                    ? `${percentage}%`
-                    : '0%',
+                  width: isInView ? `${percentage}%` : "0%",
                   transitionDelay: `${delay}ms`
                 }}
               />
@@ -1221,10 +1488,7 @@
         );
       };
 
-      // =====================
-      //  PROCESS STEP
-      // =====================
-
+      // --- PASO PROCESO ---
       const ProcessStep = ({
         number,
         title,
@@ -1232,22 +1496,20 @@
         delay,
         isLast
       }) => {
-        const [ref, isInView] = useInView({
-          threshold: 0.2
-        });
+        const [ref, isInView] = useInView({ threshold: 0.2 });
 
         return (
           <div
             ref={ref}
             className={`flex flex-col items-center text-center p-6 transition-all duration-1000 transform relative ${
               isInView
-                ? 'opacity-100 translate-y-0'
-                : 'opacity-0 translate-y-12'
+                ? "opacity-100 translate-y-0"
+                : "opacity-0 translate-y-12"
             }`}
             style={{ transitionDelay: `${delay}ms` }}
           >
             <div className="relative mb-6 w-full flex justify-center">
-              <div className="absolute inset-0 bg-blue-500 blur-xl opacity-20 rounded-full w-16 h-16 mx-auto"></div>
+              <div className="absolute inset-0 bg-blue-500 blur-xl opacity-20 rounded-full w-16 h-16 mx-auto" />
               <div className="relative w-16 h-16 rounded-full bg-gradient-to-br from-blue-600 to-cyan-400 p-[2px] shadow-lg shadow-blue-500/20 z-10">
                 <div className="w-full h-full rounded-full bg-zinc-900 flex items-center justify-center">
                   <span className="text-xl font-bold text-white font-mono">
@@ -1256,7 +1518,7 @@
                 </div>
               </div>
               {!isLast && (
-                <div className="hidden lg:block absolute top-1/2 left-1/2 w-full h-[2px] bg-zinc-800 -z-0 transform -translate-y-1/2"></div>
+                <div className="hidden lg:block absolute top-1/2 left-1/2 w-full h-[2px] bg-zinc-800 -z-0 transform -translate-y-1/2" />
               )}
             </div>
 
@@ -1270,98 +1532,75 @@
         );
       };
 
-      // =====================
-      //  TECH STACK
-      // =====================
-
+      // --- TECH STACK ---
       const TechStack = () => {
-        const { tools, aiTools } =
-          window.PORTFOLIO_DATA;
+        const tools = window.JRE_TOOLS || [];
+        const aiTools = window.JRE_AI_TOOLS || [];
 
         useEffect(() => {
-          const aiItems =
-            document.querySelectorAll('.ai-item');
+          const aiItems = document.querySelectorAll(".ai-item");
+
           aiItems.forEach((item) => {
-            const wrapper =
-              item.querySelector('.icon-wrapper');
+            const wrapper = item.querySelector(".icon-wrapper");
             let sparkInterval;
-            const shine =
-              document.createElement('div');
-            shine.className = 'card-shine';
+
+            const shine = document.createElement("div");
+            shine.className = "card-shine";
             wrapper.appendChild(shine);
-            const glare =
-              document.createElement('div');
-            glare.className = 'card-glare';
+
+            const glare = document.createElement("div");
+            glare.className = "card-glare";
             wrapper.appendChild(glare);
-            const sparksContainer =
-              document.createElement('div');
-            sparksContainer.className =
-              'sparks-container';
+
+            const sparksContainer = document.createElement("div");
+            sparksContainer.className = "sparks-container";
             wrapper.appendChild(sparksContainer);
 
             const createSpark = () => {
-              const spark =
-                document.createElement('div');
-              spark.className = 'spark';
-              spark.style.left =
-                Math.random() * 88 + 'px';
-              spark.style.bottom = '0px';
+              const spark = document.createElement("div");
+              spark.className = "spark";
+              spark.style.left = Math.random() * 88 + "px";
+              spark.style.bottom = "0px";
               spark.style.setProperty(
-                '--drift',
-                (Math.random() - 0.5) * 40 + 'px'
+                "--drift",
+                (Math.random() - 0.5) * 40 + "px"
               );
               sparksContainer.appendChild(spark);
               setTimeout(() => spark.remove(), 600);
             };
 
             const handleMove = (e) => {
-              const rect =
-                wrapper.getBoundingClientRect();
+              const rect = wrapper.getBoundingClientRect();
               const x = e.clientX - rect.left;
               const y = e.clientY - rect.top;
               const centerX = rect.width / 2;
               const centerY = rect.height / 2;
-              const rotateX =
-                ((y - centerY) / centerY) * -12;
-              const rotateY =
-                ((x - centerX) / centerX) * 12;
+              const rotateX = ((y - centerY) / centerY) * -12;
+              const rotateY = ((x - centerX) / centerX) * 12;
+
               wrapper.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
               shine.style.backgroundPosition = `${
                 (x / rect.width) * 100
               }% ${(y / rect.height) * 100}%`;
-              wrapper.style.setProperty(
-                '--pointer-x',
-                `${x}px`
-              );
-              wrapper.style.setProperty(
-                '--pointer-y',
-                `${y}px`
-              );
+              wrapper.style.setProperty("--pointer-x", `${x}px`);
+              wrapper.style.setProperty("--pointer-y", `${y}px`);
             };
 
-            item.addEventListener(
-              'mousemove',
-              handleMove
-            );
-            item.addEventListener(
-              'mouseenter',
-              () => {
-                sparkInterval = setInterval(
-                  createSpark,
-                  60
-                );
-                createSpark();
-              }
-            );
-            item.addEventListener(
-              'mouseleave',
-              () => {
-                clearInterval(sparkInterval);
-                sparksContainer.innerHTML = '';
-                wrapper.style.transform =
-                  'rotateX(0) rotateY(0) scale(1)';
-              }
-            );
+            const handleEnter = () => {
+              sparkInterval = setInterval(createSpark, 60);
+              createSpark();
+            };
+
+            const handleLeave = () => {
+              clearInterval(sparkInterval);
+              sparksContainer.innerHTML = "";
+              wrapper.style.transform =
+                "rotateX(0) rotateY(0) scale(1)";
+            };
+
+            item.addEventListener("mousemove", handleMove);
+            item.addEventListener("mouseenter", handleEnter);
+            item.addEventListener("mouseleave", handleLeave);
           });
         }, []);
 
@@ -1369,24 +1608,20 @@
           <div className="w-full mt-24 space-y-20">
             <div>
               <h3 className="text-3xl font-extrabold mb-8 flex items-center gap-2 bg-clip-text text-transparent bg-cotton-candy animate-shine bg-[length:200%_auto]">
-                <span className="w-8 h-1 bg-blue-500 rounded-full"></span>
+                <span className="w-8 h-1 bg-blue-500 rounded-full" />
                 Tecnologías / Herramientas
               </h3>
               <div className="tech-grid-container">
                 {tools.map((tool, i) => (
-                  <div
-                    key={i}
-                    className="tech-item"
-                  >
+                  <div key={i} className="tech-item">
                     <div className="icon-wrapper">
                       <img
                         src={tool.icon}
                         alt={tool.name}
                         className="full-icon"
-                        onError={(e) =>
-                          (e.target.style.display =
-                            'none')
-                        }
+                        onError={(e) => {
+                          e.target.style.display = "none";
+                        }}
                       />
                     </div>
                     <span className="text-zinc-400 text-sm mt-2 font-medium tracking-wide">
@@ -1396,27 +1631,22 @@
                 ))}
               </div>
             </div>
-
             <div>
               <h3 className="text-3xl font-extrabold mb-8 flex items-center gap-2 bg-clip-text text-transparent bg-cotton-candy animate-shine bg-[length:200%_auto]">
-                <span className="w-8 h-1 bg-blue-500 rounded-full"></span>
+                <span className="w-8 h-1 bg-blue-500 rounded-full" />
                 Inteligencia Artificial
               </h3>
               <div className="tech-grid-container">
                 {aiTools.map((tool, i) => (
-                  <div
-                    key={i}
-                    className="tech-item ai-item"
-                  >
+                  <div key={i} className="tech-item ai-item">
                     <div className="icon-wrapper">
                       <img
                         src={tool.icon}
                         alt={tool.name}
                         className="full-icon"
-                        onError={(e) =>
-                          (e.target.style.display =
-                            'none')
-                        }
+                        onError={(e) => {
+                          e.target.style.display = "none";
+                        }}
                       />
                     </div>
                     <span className="text-zinc-400 text-sm mt-2 font-medium tracking-wide">
@@ -1430,45 +1660,39 @@
         );
       };
 
-      // =====================
-      //  NAVBAR
-      // =====================
-
+      // --- NAVBAR ---
       const Navbar = () => {
-        const [isScrolled, setIsScrolled] =
-          useState(false);
-        const { navLinks } =
-          window.PORTFOLIO_DATA;
+        const [isScrolled, setIsScrolled] = useState(false);
 
         useEffect(() => {
           const handleScroll = () => {
             setIsScrolled(window.scrollY > 50);
           };
-          window.addEventListener(
-            'scroll',
-            handleScroll
-          );
+          window.addEventListener("scroll", handleScroll);
           return () =>
-            window.removeEventListener(
-              'scroll',
-              handleScroll
-            );
+            window.removeEventListener("scroll", handleScroll);
         }, []);
 
         const scrollToTop = (e) => {
           e.preventDefault();
-          window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-          });
+          window.scrollTo({ top: 0, behavior: "smooth" });
         };
+
+        const navLinks = [
+          { name: "Sobre mí", href: "#sobre-mi" },
+          { name: "Habilidades", href: "#habilidades" },
+          { name: "Trayectoria", href: "#trayectoria" },
+          { name: "Portfolio", href: "#portfolio" },
+          { name: "Servicios", href: "#servicios" },
+          { name: "Contacto", href: "#contacto" }
+        ];
 
         return (
           <nav
             className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
               isScrolled
-                ? 'bg-zinc-950/80 backdrop-blur-md py-4 shadow-lg border-b border-zinc-800'
-                : 'bg-transparent py-6'
+                ? "bg-zinc-950/80 backdrop-blur-md py-4 shadow-lg border-b border-zinc-800"
+                : "bg-transparent py-6"
             }`}
           >
             <div className="max-w-[1400px] mx-auto px-6 flex items-center justify-between">
@@ -1476,25 +1700,24 @@
                 <a
                   href="#inicio"
                   onClick={scrollToTop}
-                  className="cursor-pointer"
+                  className="cursor-pointer flex items-center gap-2"
                 >
                   <img
                     src="logo color.svg"
                     alt="JRE Logo Color"
                     className="h-10 w-auto"
                     onError={(e) => {
-                      e.target.style.display = 'none';
+                      e.target.style.display = "none";
                     }}
                   />
                 </a>
                 <div className="text-white font-medium text-sm leading-tight tracking-tight cursor-default">
-                  JRΞdesign{' '}
+                  JRΞdesign{" "}
                   <span className="font-normal text-zinc-400">
                     | Diseño gráfico y Desarrollo web
                   </span>
                 </div>
               </div>
-
               <div className="hidden md:flex items-center gap-8">
                 {navLinks.map((link) => (
                   <a
@@ -1503,11 +1726,10 @@
                     className="text-sm font-medium text-zinc-300 hover:text-blue-500 transition-colors duration-300 relative group"
                   >
                     {link.name}
-                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-500 transition-all duration-300 group-hover:w-full"></span>
+                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-500 transition-all duration-300 group-hover:w-full" />
                   </a>
                 ))}
               </div>
-
               <div className="md:hidden text-zinc-300 hover:text-white cursor-pointer">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -1529,10 +1751,7 @@
         );
       };
 
-      // =====================
-      //  DRAWING TRANSFORMATION
-      // =====================
-
+      // --- HERO UTILS ---
       const DrawingTransformation = ({
         initialIcon: InitialIcon,
         finalIcon: FinalIcon,
@@ -1550,14 +1769,13 @@
             setTimeout(() => setStage(1), 500);
             setTimeout(() => setStage(2), 3500);
           };
+
           const startTimeout = setTimeout(() => {
             cycle();
-            const interval = setInterval(
-              cycle,
-              9000
-            );
+            const interval = setInterval(cycle, 9000);
             return () => clearInterval(interval);
           }, delay);
+
           return () => clearTimeout(startTimeout);
         }, [delay]);
 
@@ -1573,15 +1791,15 @@
             <div
               className={`relative w-20 h-28 md:w-28 md:h-40 rounded-lg backdrop-blur-md transition-all duration-1000 ${
                 stage === 2
-                  ? 'bg-zinc-800/40 border-zinc-500/50 shadow-2xl shadow-blue-900/20 scale-110 -translate-y-4'
-                  : 'bg-zinc-900/10 border-zinc-800 scale-100 border border-dashed'
+                  ? "bg-zinc-800/40 border-zinc-500/50 shadow-2xl shadow-blue-900/20 scale-110 -translate-y-4"
+                  : "bg-zinc-900/10 border-zinc-800 scale-100 border border-dashed"
               }`}
             >
               <div
                 className={`absolute -top-3 left-1/2 -translate-x-1/2 bg-zinc-100 text-zinc-900 border border-zinc-200 text-[8px] md:text-[10px] font-mono font-bold px-2 py-0.5 rounded-sm transition-all duration-500 ${
                   stage === 2
-                    ? 'opacity-100 translate-y-0'
-                    : 'opacity-0 translate-y-2'
+                    ? "opacity-100 translate-y-0"
+                    : "opacity-0 translate-y-2"
                 }`}
               >
                 {label}
@@ -1589,27 +1807,25 @@
               <div className="absolute inset-0 flex flex-col items-center justify-center">
                 <div
                   className={`absolute transition-all duration-1000 ${
-                    stage === 1
-                      ? 'opacity-100'
-                      : 'opacity-0'
+                    stage === 1 ? "opacity-100" : "opacity-0"
                   }`}
                 >
                   <InitialIcon className="w-8 h-8 md:w-12 md:h-12 text-zinc-600 stroke-1" />
-                  <div className="absolute -inset-4 border border-zinc-800/30 opacity-50 rounded-lg"></div>
+                  <div className="absolute -inset-4 border border-zinc-800/30 opacity-50 rounded-lg" />
                 </div>
                 <div
                   className={`absolute transition-all duration-700 flex flex-col items-center ${
                     stage === 2
-                      ? 'opacity-100 scale-100 blur-0'
-                      : 'opacity-0 scale-75 blur-sm'
+                      ? "opacity-100 scale-100 blur-0"
+                      : "opacity-0 scale-75 blur-sm"
                   }`}
                 >
                   <FinalIcon className="w-10 h-10 md:w-14 md:h-14 text-blue-500 fill-blue-500/10" />
                   {stage === 2 && (
                     <div className="mt-4 flex items-center gap-2 px-2 py-1 bg-zinc-950/90 rounded-full border border-zinc-800/80 shadow-lg">
-                      <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></div>
+                      <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
                       <div className="w-8 h-1 bg-zinc-800 rounded-full overflow-hidden">
-                        <div className="h-full bg-blue-500 w-2/3 animate-[pulse_1s_infinite]"></div>
+                        <div className="h-full bg-blue-500 w-2/3 animate-[pulse_1s_infinite]" />
                       </div>
                     </div>
                   )}
@@ -1620,42 +1836,7 @@
         );
       };
 
-      // =====================
-      //  SKILL CARD (simple)
-      // =====================
-
-      const SkillCard = ({
-        icon: Icon,
-        title,
-        delay
-      }) => {
-        const [ref, isInView] = useInView({
-          threshold: 0.2
-        });
-        return (
-          <div
-            ref={ref}
-            className={`transition-all duration-700 transform ${
-              isInView
-                ? 'opacity-100 translate-x-0'
-                : 'opacity-0 -translate-x-10'
-            }`}
-            style={{ transitionDelay: `${delay}ms` }}
-          >
-            <div className="flex flex-col items-center justify-center p-8 h-full min-h-[280px] rounded-2xl border border-blue-500/60 bg-[linear-gradient(to_bottom,#111111_0%,#06080d_100%)] transition-all duration-300 hover:shadow-[0_0_20px_rgba(59,130,246,0.4)] group">
-              <Icon className="w-12 h-12 text-white mb-6 stroke-[1.5] group-hover:scale-110 transition-transform duration-300" />
-              <h3 className="text-white font-bold text-center leading-tight whitespace-pre-line">
-                {title}
-              </h3>
-            </div>
-          </div>
-        );
-      };
-
-      // =====================
-      //  HERO SECTION
-      // =====================
-
+      // --- HERO ---
       const HeroSection = () => {
         return (
           <section
@@ -1689,7 +1870,7 @@
                 <DrawingTransformation
                   initialIcon={Database}
                   finalIcon={BarChart3}
-                  label="ANALISIS"
+                  label="ANÁLISIS"
                   delay={5000}
                   x="80%"
                   y="20%"
@@ -1708,28 +1889,26 @@
                 />
               </div>
             </div>
+
             <div className="relative z-20 text-center px-4 max-w-5xl mx-auto pt-20">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-zinc-800 bg-zinc-900/50 text-zinc-400 text-xs font-mono mb-8 animate-[fadeIn_1s_ease-out]">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-zinc-800 bg-zinc-900/50 text-zinc-400 text-xs font-mono mb-8">
                 <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500" />
                 </span>
                 Open to work
               </div>
-
               <h1 className="flex flex-wrap items-center justify-center gap-4 md:gap-8 text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-bold tracking-tighter text-white mb-8 leading-[1.05] drop-shadow-2xl">
                 <JRELogo className="h-32 w-32 sm:h-40 sm:w-40 md:h-60 md:w-60 lg:h-80 lg:w-80 mb-2 md:mb-0" />
                 <span className="underline decoration-blue-500 decoration-4 underline-offset-4 md:underline-offset-8">
                   design
                 </span>
               </h1>
-
               <p className="text-lg sm:text-xl text-zinc-400 max-w-2xl mx-auto leading-relaxed font-light">
-                Transformando ideas en identidades visuales que conectan y
-                perduran. Construyo experiencias visuales con atención al
-                detalle.
+                Transformando ideas en identidades visuales que
+                conectan y perduran. Construyo experiencias visuales
+                con atención al detalle.
               </p>
-
               <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center items-center">
                 <a
                   href="#portfolio"
@@ -1749,28 +1928,25 @@
         );
       };
 
-      // =====================
-      //  SECTION WRAPPER
-      // =====================
-
+      // --- SECTION WRAPPER (VOLVEMOS A max-w-4xl) ---
       const Section = ({
         id,
         title,
         children,
-        bgColor = 'bg-transparent',
+        bgColor = "bg-transparent",
         titleCenter = true
       }) => (
         <section
           id={id}
           className={`min-h-screen flex flex-col items-center justify-center relative z-20 px-6 py-24 ${bgColor}`}
         >
-          <div className="max-w-4xl w-full">
+          <div className="max-w-4xl w-full mx-auto">
             <h2
               className={`text-5xl md:text-7xl font-extrabold mb-12 flex items-center gap-4 ${
-                titleCenter ? 'justify-center' : ''
+                titleCenter ? "justify-center" : ""
               } bg-clip-text text-transparent bg-cotton-candy animate-shine bg-[length:200%_auto]`}
             >
-              <span className="w-12 h-1 bg-blue-500 rounded-full"></span>
+              <span className="w-12 h-1 bg-blue-500 rounded-full" />
               {title}
             </h2>
             <div className="text-zinc-400 text-lg leading-relaxed w-full">
@@ -1780,32 +1956,204 @@
         </section>
       );
 
-      // =====================
-      //  APP
-      // =====================
+      // --- TIMELINE ---
+      const Timeline = () => {
+        const wrapperRef = useRef(null);
+        const items = (window.JRE_TIMELINE || []).slice();
 
+        useEffect(() => {
+          const wrapper = wrapperRef.current;
+          if (!wrapper) return;
+
+          const progressLine =
+            wrapper.querySelector(".timeline-progress");
+          const domItems =
+            wrapper.querySelectorAll(".timeline-item");
+          let electricEffectTriggered = false;
+
+          const observerOptions = {
+            root: null,
+            rootMargin: "0px",
+            threshold: 0.15
+          };
+
+          const observer = new IntersectionObserver(
+            (entries, obs) => {
+              entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                  entry.target.classList.add("is-visible");
+                  obs.unobserve(entry.target);
+                }
+              });
+            },
+            observerOptions
+          );
+
+          domItems.forEach((el) => observer.observe(el));
+
+          const updateProgress = () => {
+            const rect = wrapper.getBoundingClientRect();
+            const windowHeight = window.innerHeight;
+
+            const triggerPoint = windowHeight * 0.55;
+            const wrapperTop = rect.top;
+            const wrapperHeight = rect.height;
+
+            let percentage =
+              (triggerPoint - wrapperTop) / wrapperHeight;
+            percentage = Math.max(0, Math.min(1, percentage));
+
+            if (progressLine) {
+              progressLine.style.height = `${percentage * 100}%`;
+            }
+
+            const blueLineTip =
+              wrapperTop + wrapperHeight * percentage;
+
+            domItems.forEach((itemEl, index) => {
+              const itemRect = itemEl.getBoundingClientRect();
+              const itemTop = itemRect.top;
+
+              const isReached = blueLineTip > itemTop + 50;
+
+              if (index === domItems.length - 1) {
+                if (isReached && !electricEffectTriggered) {
+                  electricEffectTriggered = true;
+                  itemEl.classList.add("electric-active");
+                }
+              } else {
+                if (isReached) {
+                  itemEl.classList.add("active");
+                } else {
+                  itemEl.classList.remove("active");
+                }
+              }
+            });
+          };
+
+          window.addEventListener("scroll", updateProgress, {
+            passive: true
+          });
+          window.addEventListener("resize", updateProgress);
+          updateProgress();
+
+          return () => {
+            observer.disconnect();
+            window.removeEventListener("scroll", updateProgress);
+            window.removeEventListener("resize", updateProgress);
+          };
+        }, []);
+
+        return (
+          <div ref={wrapperRef} className="timeline-wrapper">
+            <div className="timeline-line-container">
+              <div className="timeline-progress" />
+            </div>
+
+            {items.map((item, index) =>
+              item.isElectric ? (
+                <div
+                  className="timeline-item"
+                  id="last-card"
+                  key={item.id || index}
+                >
+                  <div className="timeline-content electric-card-container">
+                    <div className="electric-layers">
+                      <div className="electric-background-glow" />
+                      <div className="electric-overlay-1" />
+                      <div className="electric-inner-container">
+                        <div className="electric-border-outer">
+                          <div className="electric-main-card" />
+                        </div>
+                        <div className="electric-glow-1" />
+                        <div className="electric-glow-2" />
+                      </div>
+                    </div>
+
+                    <div className="relative z-10 flex flex-col md:flex-row gap-6 items-start">
+                      <div className="logo-container">
+                        <img
+                          src={item.logo}
+                          alt={item.logoAlt}
+                          onError={(e) => {
+                            e.target.style.display = "none";
+                          }}
+                        />
+                      </div>
+                      <div className="text-container">
+                        <span className="text-[var(--electric-border-color)] font-mono text-xs font-bold tracking-wide uppercase mb-2 block">
+                          {item.period}
+                        </span>
+                        <h3 className="text-2xl font-bold text-white mb-1">
+                          {item.role}
+                        </h3>
+                        <h4 className="text-sm font-semibold text-zinc-300 uppercase tracking-wider mb-3">
+                          {item.company}
+                        </h4>
+                        <p className="text-zinc-400 leading-relaxed text-sm md:text-base">
+                          {item.description}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <div
+                  className="timeline-item"
+                  key={item.id || index}
+                >
+                  <div className="timeline-content">
+                    <div className="logo-container">
+                      <img
+                        src={item.logo}
+                        alt={item.logoAlt}
+                        onError={(e) => {
+                          e.target.style.display = "none";
+                        }}
+                      />
+                    </div>
+                    <div className="text-container">
+                      <span className="text-blue-400 font-mono text-xs font-bold tracking-wide uppercase mb-2 block">
+                        {item.period}
+                      </span>
+                      <h3 className="text-2xl font-bold text-white mb-1">
+                        {item.role}
+                      </h3>
+                      <h4 className="text-sm font-semibold text-zinc-300 uppercase tracking-wider mb-3">
+                        {item.company}
+                      </h4>
+                      <p className="text-zinc-400 leading-relaxed text-sm md:text-base">
+                        {item.description}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )
+            )}
+          </div>
+        );
+      };
+
+      // --- Mapa de iconos para las tarjetas "Sobre mí" ---
+      const aboutIconMap = {
+        pen: PenTool,
+        badge: BadgeCheck,
+        layout: Layout,
+        code: Code
+      };
+
+      // --- APP ---
       const App = () => {
-        const {
-          skillsData,
-          metrics,
-          processSteps,
-          services,
-          projects,
-          socialLinks
-        } = window.PORTFOLIO_DATA;
-
-        const metricIconMap = {
-          Briefcase,
-          Users,
-          Award,
-          Star
-        };
+        const skillsData = window.JRE_SKILLS || [];
+        const projects = window.JRE_PROJECTS || [];
+        const aboutCards = window.JRE_ABOUT_CARDS || [];
+        const services = window.JRE_SERVICES || [];
+        const contactLinks = window.JRE_CONTACT_LINKS || [];
 
         return (
           <div className="relative bg-zinc-950">
-            {/* Fondo */}
-            <div className="fixed inset-0 z-0 opacity-20 pointer-events-none bg-grid-pattern"></div>
-            <div className="fixed inset-0 z-0 bg-[radial-gradient(circle_at_center,transparent_0%,#09090b_100%)] pointer-events-none"></div>
+            <div className="fixed inset-0 z-0 opacity-20 pointer-events-none bg-grid-pattern" />
+            <div className="fixed inset-0 z-0 bg-[radial-gradient(circle_at_center,transparent_0%,#09090b_100%)] pointer-events-none" />
 
             <Navbar />
 
@@ -1820,45 +2168,40 @@
               >
                 <div className="mb-16">
                   <p className="mb-6">
-                    Soy un diseñador gráfico multidisciplinar que disfruta dando
-                    forma a identidades visuales con carácter y coherencia,
-                    tanto en proyectos institucionales como comerciales. Mi
-                    trabajo se mueve entre el branding, la creación de
-                    interfaces y el desarrollo web con stack MERN, donde
-                    encuentro un punto de encuentro natural entre lo visual y lo
-                    funcional, ya sea desde el branding, la producción editorial
-                    o la comunicación institucional.
+                    Soy un diseñador gráfico multidisciplinar que
+                    disfruta dando forma a identidades visuales con
+                    carácter y coherencia, tanto en proyectos
+                    institucionales como comerciales. Mi trabajo se
+                    mueve entre el branding, la creación de
+                    interfaces y el desarrollo web con stack MERN,
+                    donde encuentro un punto de encuentro natural
+                    entre lo visual y lo funcional, ya sea desde el
+                    branding, la producción editorial o la
+                    comunicación institucional.
                   </p>
                   <p>
-                    Me motiva construir experiencias que comuniquen con claridad
-                    y que se sientan fluidas al interactuar. Desde la
-                    sensibilidad del diseño hasta la lógica del código, busco
-                    que cada detalle aporte a una experiencia de usuario
-                    intuitiva, satisfactoria y pensada con intención.
+                    Me motiva construir experiencias que comuniquen
+                    con claridad y que se sientan fluidas al
+                    interactuar. Desde la sensibilidad del diseño
+                    hasta la lógica del código, busco que cada
+                    detalle aporte a una experiencia de usuario
+                    intuitiva, satisfactoria y pensada con
+                    intención.
                   </p>
                 </div>
-
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 w-full">
-                  <CardStyle
-                    icon={PenTool}
-                    title="Diseño Gráfico"
-                    delay={0}
-                  />
-                  <CardStyle
-                    icon={BadgeCheck}
-                    title={'Identidad visual y\nBranding'}
-                    delay={300}
-                  />
-                  <CardStyle
-                    icon={Layout}
-                    title="Diseño UI/UX"
-                    delay={600}
-                  />
-                  <CardStyle
-                    icon={Code}
-                    title={'Jr. en Desarrollo\nWeb Full Stack'}
-                    delay={900}
-                  />
+                  {aboutCards.map((card, index) => {
+                    const Icon =
+                      aboutIconMap[card.icon] || PenTool;
+                    return (
+                      <CardStyle
+                        key={card.id || index}
+                        icon={Icon}
+                        title={card.title}
+                        delay={index * 300}
+                      />
+                    );
+                  })}
                 </div>
               </Section>
 
@@ -1869,13 +2212,13 @@
                 titleCenter={false}
               >
                 <p className="mb-12 text-zinc-400">
-                  Mi experiencia abarca múltiples disciplinas del diseño y la
-                  comunicación visual.
+                  Mi experiencia abarca múltiples disciplinas del
+                  diseño y la comunicación visual.
                 </p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6">
                   {skillsData.map((skill, i) => (
                     <SkillBar
-                      key={skill.name}
+                      key={i}
                       name={skill.name}
                       percentage={skill.pct}
                       delay={i * 100}
@@ -1885,61 +2228,13 @@
                 <TechStack />
               </Section>
 
-              {/* TRAYECTORIA */}
+              {/* TRAYECTORIA (TIMELINE) */}
               <Section
                 id="trayectoria"
                 title="Trayectoria"
                 titleCenter={false}
               >
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-20 w-full">
-                  {metrics.map((metric, index) => {
-                    const Icon =
-                      metricIconMap[metric.icon];
-                    return (
-                      <div
-                        key={index}
-                        className="flex flex-col items-center text-center"
-                      >
-                        <Icon className="w-8 h-8 text-blue-500 mb-4" />
-                        <span className="text-3xl md:text-4xl font-bold text-white mb-2">
-                          {metric.value}
-                        </span>
-                        <span className="text-sm text-zinc-400">
-                          {metric.label}
-                        </span>
-                      </div>
-                    );
-                  })}
-                </div>
-
-                <div className="space-y-8 border-l-2 border-zinc-800 pl-8 ml-2">
-                  <div className="relative">
-                    <div className="absolute -left-[41px] top-1 w-5 h-5 rounded-full bg-zinc-900 border-2 border-blue-500"></div>
-                    <h3 className="text-xl font-bold text-white">
-                      Senior Designer
-                    </h3>
-                    <p className="text-blue-500 text-sm mb-2">
-                      2021 - Presente
-                    </p>
-                    <p>
-                      Liderando proyectos de diseño digital y sistemas de diseño
-                      para clientes internacionales.
-                    </p>
-                  </div>
-                  <div className="relative">
-                    <div className="absolute -left-[41px] top-1 w-5 h-5 rounded-full bg-zinc-900 border-2 border-zinc-700"></div>
-                    <h3 className="text-xl font-bold text-white">
-                      Frontend Developer
-                    </h3>
-                    <p className="text-zinc-500 text-sm mb-2">
-                      2018 - 2021
-                    </p>
-                    <p>
-                      Desarrollo de interfaces reactivas utilizando React y
-                      Tailwind CSS.
-                    </p>
-                  </div>
-                </div>
+                <Timeline />
               </Section>
 
               {/* PORTFOLIO */}
@@ -1950,16 +2245,24 @@
               >
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   {projects.map((project) => (
-                    <div
+                    <a
                       key={project.id}
+                      href={project.url}
                       className="group relative aspect-video bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden cursor-pointer hover:border-blue-500/50 transition-all"
                     >
-                      <div className="absolute inset-0 flex items-center justify-center text-zinc-700 group-hover:text-blue-500 transition-colors">
-                        <span className="text-4xl font-bold">
+                      <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-zinc-700 group-hover:text-blue-400 transition-colors">
+                        <span className="text-3xl md:text-4xl font-bold">
                           {project.title}
                         </span>
+                        <span className="mt-2 text-sm md:text-base text-zinc-500 group-hover:text-zinc-300">
+                          {project.subtitle}
+                        </span>
+                        <span className="mt-3 inline-flex items-center gap-2 px-3 py-1 rounded-full border border-zinc-700 text-[11px] uppercase tracking-wide text-zinc-400 group-hover:border-blue-500/70 group-hover:text-blue-300">
+                          <span className="w-1.5 h-1.5 rounded-full bg-blue-500" />
+                          {project.tag}
+                        </span>
                       </div>
-                    </div>
+                    </a>
                   ))}
                 </div>
               </Section>
@@ -1975,32 +2278,47 @@
                     Mi Proceso de Trabajo
                   </h3>
                   <p className="text-zinc-400 text-lg max-w-3xl mx-auto leading-relaxed">
-                    Soluciones integrales de diseño y comunicación visual para
-                    empresas, instituciones y emprendedores que buscan destacar
-                    en su mercado.
+                    Soluciones integrales de diseño y comunicación
+                    visual para empresas, instituciones y
+                    emprendedores que buscan destacar en su mercado.
                   </p>
                 </div>
 
                 <div className="mb-24 grid grid-cols-1 md:grid-cols-4 gap-8">
-                  {processSteps.map((step) => (
-                    <ProcessStep
-                      key={step.number}
-                      number={step.number}
-                      title={step.title}
-                      description={step.description}
-                      delay={step.delay}
-                      isLast={step.isLast}
-                    />
-                  ))}
+                  <ProcessStep
+                    number="01"
+                    title="Estrategia Primero"
+                    description="Cada proyecto comienza con una comprensión profunda de tus objetivos y audiencia."
+                    delay={0}
+                  />
+                  <ProcessStep
+                    number="02"
+                    title="Diseño Centrado en Resultados"
+                    description="No solo creamos algo bonito, sino algo que funciona y genera impacto."
+                    delay={200}
+                  />
+                  <ProcessStep
+                    number="03"
+                    title="Implementación Completa"
+                    description="Desde la conceptualización hasta la entrega final con todos los archivos necesarios."
+                    delay={400}
+                  />
+                  <ProcessStep
+                    number="04"
+                    title="Soporte Continuo"
+                    description="Te acompaño en la implementación y evolución de tu identidad visual."
+                    delay={600}
+                    isLast={true}
+                  />
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
-                  {services.map((service, i) => (
+                  {services.map((service, index) => (
                     <GlowingServiceCard
-                      key={service.title}
+                      key={service.id || index}
                       title={service.title}
                       description={service.description}
-                      delay={service.delay}
+                      delay={index * 200}
                     />
                   ))}
                 </div>
@@ -2012,15 +2330,15 @@
                 title="Contacto"
                 titleCenter={false}
               >
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 w-full max-w-6xl">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 w-full">
                   {/* Formulario */}
                   <div className="bg-zinc-900/50 p-8 rounded-2xl border border-zinc-800">
                     <h3 className="text-2xl font-bold text-white mb-2">
                       Cuéntame sobre tu proyecto
                     </h3>
                     <p className="text-zinc-400 text-sm mb-6">
-                      Completa el formulario para preparar una propuesta
-                      ajustada.
+                      Completa el formulario para preparar una
+                      propuesta ajustada.
                     </p>
 
                     <form className="space-y-4">
@@ -2064,9 +2382,7 @@
                             Tipo de proyecto *
                           </label>
                           <select className="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-4 py-3 text-sm text-white focus:outline-none focus:border-blue-500 transition-colors appearance-none text-zinc-300">
-                            <option>
-                              Selecciona el tipo
-                            </option>
+                            <option>Selecciona el tipo</option>
                             <option>Web Design</option>
                             <option>Development</option>
                             <option>Branding</option>
@@ -2077,13 +2393,9 @@
                             Presupuesto aprox.
                           </label>
                           <select className="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-4 py-3 text-sm text-white focus:outline-none focus:border-blue-500 transition-colors appearance-none text-zinc-300">
-                            <option>
-                              Selecciona un rango
-                            </option>
+                            <option>Selecciona un rango</option>
                             <option>€500 - €1000</option>
-                            <option>
-                              €1000 - €3000
-                            </option>
+                            <option>€1000 - €3000</option>
                             <option>+€3000</option>
                           </select>
                         </div>
@@ -2122,7 +2434,6 @@
                           </p>
                         </div>
                       </div>
-
                       <div className="flex items-center gap-4 text-zinc-300">
                         <div className="p-3 bg-zinc-900 rounded-full border border-zinc-800 text-blue-500">
                           <Calendar className="w-6 h-6" />
@@ -2136,7 +2447,6 @@
                           </p>
                         </div>
                       </div>
-
                       <div className="flex items-center gap-4 text-zinc-300">
                         <div className="p-3 bg-zinc-900 rounded-full border border-zinc-800 text-blue-500">
                           <ArrowRight className="w-6 h-6" />
@@ -2152,15 +2462,15 @@
                       </div>
                     </div>
 
-                    <div className="h-px bg-zinc-800 w-full my-8"></div>
+                    <div className="h-px bg-zinc-800 w-full my-8" />
 
                     <div>
                       <h3 className="text-3xl font-bold text-white mb-6">
                         Información de contacto
                       </h3>
                       <p className="text-zinc-400 mb-8">
-                        También puedes contactarme directamente a través de
-                        estos canales.
+                        También puedes contactarme directamente a
+                        través de estos canales.
                       </p>
 
                       <div className="space-y-6">
@@ -2207,29 +2517,31 @@
                               Lunes a Viernes: 9:00 - 15:00 (CET)
                             </p>
                             <p className="text-zinc-500 text-xs">
-                              Para proyectos urgentes, también fines de semana
+                              Para proyectos urgentes, también fines
+                              de semana
                             </p>
                           </div>
                         </div>
                       </div>
                     </div>
 
+                    {/* Links dinámicos (Behance, LinkedIn, X...) */}
                     <div className="pt-6">
                       <h4 className="text-white font-bold mb-4">
                         También me encuentras en
                       </h4>
                       <div className="grid grid-cols-1 gap-3">
-                        {socialLinks.map((link) => (
+                        {contactLinks.map((link) => (
                           <a
-                            key={link.name}
-                            href={link.href}
+                            key={link.id}
+                            href={link.url}
                             className="flex items-center justify-between p-4 bg-zinc-900 border border-zinc-800 rounded-lg hover:border-blue-500/50 transition-all group"
                           >
                             <div className="flex items-center gap-3">
                               <ExternalLink className="w-5 h-5 text-blue-500" />
                               <div>
                                 <span className="text-white font-medium block">
-                                  {link.name}
+                                  {link.label}
                                 </span>
                                 <span className="text-zinc-500 text-xs">
                                   {link.description}
@@ -2245,17 +2557,17 @@
               </Section>
 
               <footer className="py-8 text-center text-zinc-600 text-sm relative z-20 border-t border-zinc-900">
-                &copy; 2025 JREdesign. Todos los derechos reservados.
+                &copy; 2025 JREdesign. Todos los derechos
+                reservados.
               </footer>
             </main>
           </div>
         );
       };
 
-      const root =
-        ReactDOM.createRoot(
-          document.getElementById('root')
-        );
+      const root = ReactDOM.createRoot(
+        document.getElementById("root")
+      );
       root.render(<App />);
     </script>
   </body>
