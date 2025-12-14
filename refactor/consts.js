@@ -1,5 +1,246 @@
-// const.js
+// consts.js
 // Datos dinámicos para el portfolio JREdesign
+// Incluye: diccionario central de categorías + normalización automática
+// Categorías normalizadas (únicas válidas):
+// - branding
+// - graphic-design
+// - editorial
+// - ui-ux
+// - web-dev
+// - other
+
+/* -------------------------------------------------------
+   1) DICCIONARIO CENTRAL DE CATEGORÍAS (NORMALIZADAS)
+-------------------------------------------------------- */
+
+window.JRE_PORTFOLIO_CATEGORIES = {
+  "graphic-design": {
+    key: "graphic-design",
+    label: "DISEÑO GRÁFICO",
+    order: 10,
+    hint:
+      "Cartelería, piezas impresas, stands e identidad aplicada (no puramente digital interactivo).",
+    includes: [
+      "Cartelería",
+      "Stands",
+      "Piezas impresas",
+      "Identidad aplicada",
+      "Material corporativo impreso"
+    ]
+  },
+
+  branding: {
+    key: "branding",
+    label: "BRANDING",
+    order: 20,
+    hint:
+      "Identidad de marca: logos, sistemas visuales, identidad corporativa y aplicaciones.",
+    includes: [
+      "Logos",
+      "Sistemas visuales",
+      "Identidad corporativa",
+      "Aplicaciones de marca",
+      "Guías de estilo / Brandbook"
+    ]
+  },
+
+  "ui-ux": {
+    key: "ui-ux",
+    label: "UI / UX",
+    order: 30,
+    hint:
+      "Diseño de interfaces y experiencia: dashboards, productos digitales y apps conceptuales.",
+    includes: [
+      "Dashboards",
+      "Productos digitales",
+      "Apps conceptuales",
+      "Wireframes / Prototipos",
+      "Sistemas de diseño UI"
+    ]
+  },
+
+  "web-dev": {
+    key: "web-dev",
+    label: "DESARROLLO WEB",
+    order: 40,
+    hint:
+      "Frontend-oriented: implemento diseño con tecnologías modernas (React, WebGL/Three, etc.).",
+    includes: [
+      "HTML / CSS",
+      "Frontend moderno",
+      "React / Next",
+      "WebGL / Three.js",
+      "Algo de backend (cuando aplica)"
+    ]
+  },
+
+  editorial: {
+    key: "editorial",
+    label: "EDITORIAL",
+    order: 50,
+    hint:
+      "Maquetación y publicaciones cuando el peso editorial es protagonista (revistas, publicaciones, retículas).",
+    includes: [
+      "Revistas",
+      "Maquetación de publicaciones",
+      "Retículas / Composición editorial",
+      "Dirección de arte editorial",
+      "Preparación para imprenta"
+    ]
+  },
+
+  other: {
+    key: "other",
+    label: "OTROS / ESPECIALES",
+    order: 60,
+    hint:
+      "Proyectos especiales, híbridos o difíciles de encajar en una categoría principal.",
+    includes: ["Otros", "Especiales", "Experimentales", "Híbridos"]
+  }
+};
+
+// Lista útil (ordenada) para UI: botones, panel móvil, etc.
+window.JRE_PORTFOLIO_CATEGORY_LIST = Object.values(
+  window.JRE_PORTFOLIO_CATEGORIES
+).sort((a, b) => a.order - b.order);
+
+// Keys válidas (por si las necesitas para validaciones rápidas)
+window.JRE_PORTFOLIO_CATEGORY_KEYS = window.JRE_PORTFOLIO_CATEGORY_LIST.map(
+  (c) => c.key
+);
+
+/* -------------------------------------------------------
+   2) NORMALIZACIÓN (ALIAS -> CATEGORÍA NORMALIZADA)
+   - Si aparece algo fuera de las 6 categorías, se mapea a "other"
+   - Soporta legacy: "diseño", "desarrollo", "web", "app", etc.
+-------------------------------------------------------- */
+
+const _JRE_ALLOWED_CATS = new Set([
+  "branding",
+  "graphic-design",
+  "editorial",
+  "ui-ux",
+  "web-dev",
+  "other"
+]);
+
+const _JRE_CATEGORY_ALIASES = {
+  // Branding
+  brand: "branding",
+  branding: "branding",
+  identidad: "branding",
+  "identidad-visual": "branding",
+  "identidad-corporativa": "branding",
+  logo: "branding",
+  logos: "branding",
+
+  // Diseño gráfico
+  "diseño": "graphic-design",
+  "diseno": "graphic-design",
+  "diseño-grafico": "graphic-design",
+  "diseno-grafico": "graphic-design",
+  "graphic": "graphic-design",
+  "graphic-design": "graphic-design",
+  "design": "graphic-design",
+  "print": "graphic-design",
+  "impresos": "graphic-design",
+  "carteleria": "graphic-design",
+  "cartelería": "graphic-design",
+  "stands": "graphic-design",
+
+  // Editorial
+  editorial: "editorial",
+  "maquetacion": "editorial",
+  "maquetación": "editorial",
+  "revista": "editorial",
+  "revistas": "editorial",
+  "publicacion": "editorial",
+  "publicación": "editorial",
+  "publicaciones": "editorial",
+
+  // UI/UX
+  "ui-ux": "ui-ux",
+  uiux: "ui-ux",
+  "ui/ux": "ui-ux",
+  ui: "ui-ux",
+  ux: "ui-ux",
+  "product": "ui-ux",
+  "producto-digital": "ui-ux",
+  "dashboard": "ui-ux",
+  "dashboards": "ui-ux",
+  "app": "ui-ux",
+  "apps": "ui-ux",
+
+  // Web Dev
+  web: "web-dev",
+  "web-dev": "web-dev",
+  "desarrollo": "web-dev",
+  development: "web-dev",
+  frontend: "web-dev",
+  "front-end": "web-dev",
+  "react": "web-dev",
+  "three": "web-dev",
+  "threejs": "web-dev",
+  "three-js": "web-dev",
+  "webgl": "web-dev",
+  "html": "web-dev",
+  "css": "web-dev",
+  "javascript": "web-dev",
+
+  // Other
+  other: "other",
+  otros: "other",
+  especiales: "other",
+  especial: "other",
+  misc: "other"
+};
+
+function _jreSlugifyCategory(raw) {
+  return String(raw || "")
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, "-")
+    .replace(/[–—_]/g, "-")
+    .replace(/\/+/g, "-");
+}
+
+function _jreNormalizeCategoryKey(raw) {
+  const slug = _jreSlugifyCategory(raw);
+  if (_JRE_ALLOWED_CATS.has(slug)) return slug;
+  if (_JRE_CATEGORY_ALIASES[slug]) return _JRE_CATEGORY_ALIASES[slug];
+  return "other";
+}
+
+function _jreNormalizeCategoryArray(arr) {
+  const input = Array.isArray(arr) ? arr : [];
+  const normalized = input
+    .map(_jreNormalizeCategoryKey)
+    .filter(Boolean);
+
+  // Deduplicar conservando orden
+  const seen = new Set();
+  const unique = [];
+  for (const c of normalized) {
+    if (!seen.has(c)) {
+      seen.add(c);
+      unique.push(c);
+    }
+  }
+
+  // Si viene vacío, lo mandamos a "other"
+  return unique.length ? unique : ["other"];
+}
+
+function _jreNormalizeProject(project) {
+  return {
+    ...project,
+    categories: _jreNormalizeCategoryArray(project.categories)
+  };
+}
+
+/* -------------------------------------------------------
+   3) DATOS: HABILIDADES / SOBRE MÍ / STACK / SERVICIOS / ETC.
+-------------------------------------------------------- */
 
 // HABILIDADES
 window.JRE_SKILLS = [
@@ -15,26 +256,10 @@ window.JRE_SKILLS = [
 
 // TARJETAS "SOBRE MÍ"
 window.JRE_ABOUT_CARDS = [
-  {
-    id: 1,
-    title: "Diseño Gráfico",
-    icon: "pen"
-  },
-  {
-    id: 2,
-    title: "Identidad visual y\nBranding",
-    icon: "badge"
-  },
-  {
-    id: 3,
-    title: "Diseño UI/UX",
-    icon: "layout"
-  },
-  {
-    id: 4,
-    title: "Jr. en Desarrollo\nWeb Full Stack",
-    icon: "code"
-  }
+  { id: 1, title: "Diseño Gráfico", icon: "pen" },
+  { id: 2, title: "Identidad visual y\nBranding", icon: "badge" },
+  { id: 3, title: "Diseño UI/UX", icon: "layout" },
+  { id: 4, title: "Jr. en Desarrollo\nWeb Full Stack", icon: "code" }
 ];
 
 // TECH STACK (Herramientas)
@@ -69,7 +294,12 @@ window.JRE_AI_TOOLS = [
   { name: "Claude", icon: "assets/claude.svg" }
 ];
 
-// PROYECTOS (Portfolio avanzado con categorías, modal y paginación)
+/* -------------------------------------------------------
+   4) PROYECTOS (CON CATEGORÍAS NORMALIZADAS)
+   - Puedes seguir poniendo legacy categories y se normalizarán
+   - Lo ideal: usar ya las 6 definitivas directamente
+-------------------------------------------------------- */
+
 const baseProjects = [
   {
     id: 1,
@@ -77,7 +307,8 @@ const baseProjects = [
     subtitle: "UI/UX Dashboard",
     tag: "UI/UX",
     isNew: true,
-    categories: ["ui-ux", "desarrollo"],
+    // Antes: ["ui-ux", "desarrollo"] -> ahora: ["ui-ux", "web-dev"]
+    categories: ["ui-ux", "web-dev"],
     image:
       "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1600&auto=format&fit=crop",
     description:
@@ -90,13 +321,15 @@ const baseProjects = [
     ],
     url: "#"
   },
+
   {
     id: 2,
     title: "Lumina Magazine",
     subtitle: "Diseño editorial",
     tag: "Editorial",
     isNew: true,
-    categories: ["editorial", "diseño"],
+    // Antes: ["editorial", "diseño"] -> ahora: ["editorial"]
+    categories: ["editorial"],
     image:
       "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?q=80&w=1600&auto=format&fit=crop",
     description:
@@ -109,13 +342,15 @@ const baseProjects = [
     ],
     url: "#"
   },
+
   {
     id: 3,
     title: "Zenith Web",
     subtitle: "Web corporativa 3D",
     tag: "Development",
     isNew: true,
-    categories: ["desarrollo", "ui-ux"],
+    // Antes: ["desarrollo", "ui-ux"] -> ahora: ["web-dev", "ui-ux"]
+    categories: ["web-dev", "ui-ux"],
     image:
       "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1600&auto=format&fit=crop",
     description:
@@ -128,13 +363,15 @@ const baseProjects = [
     ],
     url: "#"
   },
+
   {
     id: 4,
     title: "Echo Packaging",
     subtitle: "Packaging sostenible",
     tag: "Branding",
     isNew: true,
-    categories: ["branding", "editorial"],
+    // Antes: ["branding", "editorial"] -> ahora: ["branding", "graphic-design"]
+    categories: ["branding", "graphic-design"],
     image:
       "https://images.unsplash.com/photo-1632515904664-88421d097966?q=80&w=1600&auto=format&fit=crop",
     description:
@@ -146,13 +383,15 @@ const baseProjects = [
     ],
     url: "#"
   },
+
   {
     id: 5,
     title: "Velocita App",
     subtitle: "App de movilidad",
     tag: "Product",
     isNew: true,
-    categories: ["ui-ux", "app"],
+    // Antes: ["ui-ux", "app"] -> ahora: ["ui-ux"]
+    categories: ["ui-ux"],
     image:
       "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?q=80&w=1600&auto=format&fit=crop",
     description:
@@ -164,14 +403,15 @@ const baseProjects = [
     ],
     url: "#"
   },
+
   {
     id: 6,
     title: "Gecko Aventura",
     subtitle: "Identidad visual & branding",
     tag: "Branding",
-    // PROPIEDAD NUEVA:
     isNew: true,
-    categories: ["branding", "diseño", "web"],
+    // Antes: ["branding", "diseño", "web"] -> ahora: ["branding", "graphic-design", "web-dev"]
+    categories: ["branding", "graphic-design", "web-dev"],
     image:
       "https://jredesigner.wordpress.com/wp-content/uploads/2025/03/gecko-promo.png",
     description:
@@ -191,16 +431,19 @@ const baseProjects = [
   }
 ];
 
-// Generamos más proyectos para probar la paginación de 9
+// Normalizamos por si en el futuro metes categorías legacy sin querer
+const normalizedBaseProjects = baseProjects.map(_jreNormalizeProject);
+
+// Generamos más proyectos para probar la paginación de 9 (manteniendo categorías normalizadas)
 window.JRE_PROJECTS = [
-  ...baseProjects,
-  ...baseProjects.map((p) => ({
+  ...normalizedBaseProjects,
+  ...normalizedBaseProjects.map((p) => ({
     ...p,
     id: p.id + 10,
     title: p.title + " II",
     isNew: false
-  })), // Los duplicados no son "nuevos"
-  ...baseProjects.map((p) => ({
+  })),
+  ...normalizedBaseProjects.map((p) => ({
     ...p,
     id: p.id + 20,
     title: p.title + " III",
@@ -208,10 +451,13 @@ window.JRE_PROJECTS = [
   }))
 ];
 
-// Asignamos directamente los proyectos base sin duplicar
-// window.JRE_PROJECTS = baseProjects;
+// Si quieres trabajar sin duplicados para producción, usa esto:
+// window.JRE_PROJECTS = normalizedBaseProjects;
 
-// SERVICIOS (tarjetas glowing)
+/* -------------------------------------------------------
+   5) SERVICIOS (tarjetas glowing)
+-------------------------------------------------------- */
+
 window.JRE_SERVICES = [
   {
     id: 1,
@@ -230,10 +476,19 @@ window.JRE_SERVICES = [
     title: "Branding",
     description:
       "Identidades visuales completas, desde el logo hasta la guía de estilo."
+  },
+   {
+    id: 4,
+    title: "Editorial",
+    description:
+      "Todo tipo de publicaciones: revistas, catálogos, libros y más."
   }
 ];
 
-// LINKS DE CONTACTO (Behance, LinkedIn, X...)
+/* -------------------------------------------------------
+   6) LINKS DE CONTACTO
+-------------------------------------------------------- */
+
 window.JRE_CONTACT_LINKS = [
   {
     id: 1,
@@ -255,7 +510,10 @@ window.JRE_CONTACT_LINKS = [
   }
 ];
 
-// TIMELINE PROFESIONAL (Trayectoria)
+/* -------------------------------------------------------
+   7) TIMELINE PROFESIONAL (Trayectoria)
+-------------------------------------------------------- */
+
 window.JRE_TIMELINE = [
   {
     id: 1,
