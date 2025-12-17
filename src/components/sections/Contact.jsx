@@ -10,24 +10,29 @@ import {
 } from '../ui/Icons';
 import { CONTACT_LINKS } from '../../data/consts';
 
-// ✅ Iconos desde librería
-import { FaBehance, FaLinkedinIn } from 'react-icons/fa';
+
+import { FaBehance, FaLinkedinIn, FaGithub } from 'react-icons/fa';
 import { FaXTwitter } from 'react-icons/fa6';
 
 const getSocialIcon = (link) => {
   const raw = `${link?.id ?? ''} ${link?.label ?? ''}`.toLowerCase();
+
   if (raw.includes('behance')) return FaBehance;
   if (raw.includes('linkedin')) return FaLinkedinIn;
   if (raw.includes('twitter') || raw === 'x' || raw.includes('x ')) return FaXTwitter;
+  if (raw.includes('github')) return FaGithub;
+
   return null;
 };
 
 const getSocialLabel = (link) => {
   const label = String(link?.label ?? '').trim();
   const raw = `${link?.id ?? ''} ${label}`.toLowerCase();
+
   if (raw.includes('twitter') || raw === 'x' || raw.includes('x ')) return 'X';
+  
   return label;
-};
+}
 
 export const Contact = () => {
   return (

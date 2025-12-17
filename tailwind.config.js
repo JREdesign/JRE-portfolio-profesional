@@ -8,10 +8,12 @@ export default {
         extend: {
             animation: {
                 "pulse-slow": "pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite",
-                shine: "shine 6s linear infinite"
+                shine: "shine 6s linear infinite",
+                scroll: "scroll 40s linear infinite"
             },
             keyframes: {
-                shine: { "0%": { backgroundPosition: "200% center" }, "100%": { backgroundPosition: "-200% center" } }
+                shine: { "0%": { backgroundPosition: "200% center" }, "100%": { backgroundPosition: "-200% center" } },
+                scroll: { "0%": { transform: "translateX(0)" }, "100%": { transform: "translateX(-50%)" } }
             },
             spacing: { 128: "32rem", 144: "36rem" },
             fontFamily: { sans: ["Inter", "sans-serif"] },

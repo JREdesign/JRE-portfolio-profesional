@@ -36,7 +36,7 @@ export const HeroSection = () => {
                 </div>
                 <h1 className="flex flex-wrap items-center justify-center gap-4 md:gap-8 text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-bold tracking-tighter text-white mb-8 leading-[1.05] drop-shadow-2xl">
                     <JRELogo className="h-32 w-32 sm:h-40 sm:w-40 md:h-60 md:w-60 lg:h-80 lg:w-80 mb-2 md:mb-0" />
-                    <span className="underline decoration-blue-500 decoration-4 underline-offset-4 md:underline-offset-8">design</span>
+                    <span className="underline decoration-blue-500 decoration-4 underline-offset-4 md:underline-offset-8">design.</span>
                 </h1>
                 <p className="text-lg sm:text-xl text-zinc-400 max-w-2xl mx-auto leading-relaxed font-light">
                     Transformando ideas en identidades visuales que conectan y perduran. Construyo experiencias visuales con atención al detalle.
