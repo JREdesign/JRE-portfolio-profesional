@@ -25,14 +25,7 @@ import gpt from '../assets/gpt.svg';
 import gemini from '../assets/gemini.svg';
 import claude from '../assets/claude.svg';
 
-// import logoUni from '../assets/logo_uni.svg';
-// import logoBeta from '../assets/logo_beta.svg';
-// import logoFreelance from '../assets/logo_freelance.svg';
-// import logoAlpha from '../assets/logo_alpha.svg';
-// import logoTech from '../assets/logo_tech.svg';
-// import logoX from '../assets/logo_x.svg';
-// import logoGlobal from '../assets/logo_global.svg';
-
+// Placeholder logos (null for now as per your file)
 const logoUni = null;
 const logoBeta = null;
 const logoFreelance = null;
@@ -40,20 +33,6 @@ const logoAlpha = null;
 const logoTech = null;
 const logoX = null;
 const logoGlobal = null;
-
-// NOTE: Some assets (logos) might be missing in the asset folder if they weren't in the original list_dir.
-// I will use placeholders for now if imports fail, or assumes they exist.
-// Looking at the previous LIST_DIR, those logos (logo_uni.svg, etc.) were NOT present in `refactor/assets`.
-// They might be missing or I misread.
-// The list_dir of `refactor/assets` showed: adobe-firefly.svg, aframe.svg, antigravity.svg, bootstrap.svg, claude.svg, css.svg, docker.svg, figma.svg, framer.svg, gemini.svg, gpt.svg, html.svg, icons.psd, illustrator.svg, indesign.svg, javascript.svg, lovable.svg, midjourney.svg, mongodb.svg, nextjs.svg, nodejs.svg, photoshop.svg, react.svg, tailwind.svg, veo.svg.
-// It did NOT show `logo_uni.svg`, `logo_beta.svg`, etc.
-// The original `consts.js` referenced them as `assets/logo_uni.svg` etc.
-// If they are missing, the build will fail if I import them.
-// I will NOT import them for now, but keep strings, and maybe use a default fallback or just string paths if they are in public?
-// But since I'm moving assets to src, string paths won't work in Vite unless in public.
-// I'll assume they might be intended to be there. But to avoid breaking, I will use a dummy placeholder or string for missing ones.
-// Re-reading list_dir: `logo color.svg` and `logo.svg` ARE in `refactor/` root, not assets.
-// I need to copy those too.
 
 export const ASSETS = {
     logo: jreLogo,
@@ -304,8 +283,9 @@ export const SERVICES = [
 
 export const CONTACT_LINKS = [
     { id: 1, label: "Behance", description: "Portfolio visual completo", url: "#" },
-    { id: 2, label: "LinkedIn", description: "Perfil profesional", url: "#" },
-    { id: 3, label: "X / Twitter", description: "Contenido diario sobre diseño", url: "#" }
+    { id: 2, label: "LinkedIn", description: "Perfil profesional", url: "https://linkedin.com/in/jorge-rev-eug" },
+    { id: 3, label: "X / Twitter", description: "Contenido diario sobre diseño", url: "https://x.com/jre_design" },
+    { id: 4, label: "GitHub", description: "Repositorios y código", url: "https://github.com/JREdesign/" }
 ];
 
 export const TIMELINE = [
@@ -315,7 +295,7 @@ export const TIMELINE = [
         role: "Becario de Diseño",
         company: "Universidad Local",
         description: "Primer contacto con el mundo profesional...",
-        logo: "N/A", // Missing asset
+        logo: "N/A",
         logoAlt: "Universidad Local",
         isElectric: false
     },
@@ -325,13 +305,10 @@ export const TIMELINE = [
         role: "Junior Designer",
         company: "Agencia Creativa Beta",
         description: "Diseño de banners, newsletters y retoque fotográfico...",
-        logo: "N/A", // Missing asset
+        logo: "N/A",
         logoAlt: "Agencia Creativa Beta",
         isElectric: false
     },
-    // ... (Other timeline items with missing assets)
-    // I will just put placeholder strings or generic icons if allowed.
-    // For now leaving as is but without imports to avoid errors.
     {
         id: 3,
         period: "2015 - 2017",
@@ -381,5 +358,53 @@ export const TIMELINE = [
         logo: "N/A",
         logoAlt: "Global Tech Corp",
         isElectric: true
+    }
+];
+
+/* -------------------------------------------------------
+   NUEVA SECCIÓN AGREGADA: TESTIMONIOS
+   (Necesaria para que TestimonialsGrid.jsx funcione)
+-------------------------------------------------------- */
+
+export const TESTIMONIALS = [
+    {
+        id: 1,
+        name: "Daniel Clifford",
+        role: "CEO en TechStart",
+        image: "https://images.unsplash.com/photo-1599566150163-29194dcaad36?q=80&w=200&auto=format&fit=crop",
+        rating: 5,
+        text: "Recibí una propuesta de diseño que superó todas mis expectativas. La atención al detalle en la interfaz de usuario es impresionante. Sin duda, ha elevado el valor de nuestro producto."
+    },
+    {
+        id: 2,
+        name: "Jonathan Walters",
+        role: "Director Creativo",
+        image: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=200&auto=format&fit=crop",
+        rating: 4.5,
+        text: "El equipo fue muy solidario y mantuvo la motivación alta. La entrega fue puntual y la comunicación fluida en todo momento."
+    },
+    {
+        id: 3,
+        name: "Kira Whittle",
+        role: "Product Owner",
+        image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=200&auto=format&fit=crop",
+        rating: 5,
+        text: "Una experiencia transformadora. No sabía exactamente qué necesitaba mi marca hasta que vi la propuesta visual. ¡Altamente recomendado!"
+    },
+    {
+        id: 4,
+        name: "Jeanette Harmon",
+        role: "Marketing Lead",
+        image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=200&auto=format&fit=crop",
+        rating: 4,
+        text: "Gracias por esta experiencia maravillosa. Ahora tenemos una identidad visual que realmente nos representa y nos diferencia de la competencia."
+    },
+    {
+        id: 5,
+        name: "Patrick Abrams",
+        role: "Desarrollador Senior",
+        image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200&auto=format&fit=crop",
+        rating: 5,
+        text: "El soporte técnico y la calidad del código entregado son de primera categoría. Es fácil escalar el proyecto gracias a la estructura limpia que implementaron."
     }
 ];
