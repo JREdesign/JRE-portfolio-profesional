@@ -1,5 +1,5 @@
 import jreLogo from '../assets/logo.svg';
-import jreLogoColor from '../assets/logo-color.png';
+import logoColor from '../assets/logo-color.png';
 import photoshop from '../assets/photoshop.svg';
 import illustrator from '../assets/illustrator.svg';
 import indesign from '../assets/indesign.svg';
@@ -36,7 +36,7 @@ const logoGlobal = null;
 
 export const ASSETS = {
     logo: jreLogo,
-    logoColor: jreLogoColor
+    logoColor: logoColor
 };
 
 /* -------------------------------------------------------
