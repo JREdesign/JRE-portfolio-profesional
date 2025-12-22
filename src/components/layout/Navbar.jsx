@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { ASSETS } from '../../data/consts';
+import NeonSwitch from '../ui/NeonSwitch';
 
 export const Navbar = () => {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    
+    // Estado para el idioma: false = Español, true = Inglés
+    const [isEnglish, setIsEnglish] = useState(false);
 
     useEffect(() => {
         const handleScroll = () => setIsScrolled(window.scrollY > 50);
@@ -16,11 +20,17 @@ export const Navbar = () => {
         window.scrollTo({ top: 0, behavior: "smooth" });
     };
 
+    const handleLanguageToggle = (e) => {
+        setIsEnglish(e.target.checked);
+        // Aquí puedes añadir tu lógica de traducción
+        console.log("Idioma cambiado a:", e.target.checked ? "Inglés" : "Español");
+    };
+
     const navLinks = [
         { name: "Sobre mí", href: "#sobre-mi" },
         { name: "Habilidades", href: "#habilidades" },
         { name: "Trayectoria", href: "#trayectoria" },
-        { name: "Proyectos", href: "#portfolio" }, // Keep href #portfolio to match Section ID or change ID? User said rename "Section Portfolio to Proyectos". I will change Section ID too for consistency or just label. Let's change label here.
+        { name: "Proyectos", href: "#portfolio" },
         { name: "Servicios", href: "#servicios" },
         { name: "Contacto", href: "#contacto" }
     ];
@@ -28,19 +38,12 @@ export const Navbar = () => {
     return (
         <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? "bg-zinc-950/80 backdrop-blur-md py-4 shadow-lg border-b border-zinc-800" : "bg-transparent py-6"}`}>
             <div className="max-w-[1400px] mx-auto px-6 flex items-center justify-between">
+                
+                {/* LOGO AREA */}
                 <div className="flex items-center gap-3 md:gap-4">
                     <a href="#inicio" onClick={scrollToTop} className="cursor-pointer flex items-center gap-2">
                         <img src={ASSETS.logoColor} alt="JRE Logo Color" className="h-10 w-auto" onError={(e) => { e.target.style.display = "none"; }} />
                     </a>
-                    {/* Force standard font or sans for the special char if it needs it, but Inter supports Greek usually. 
-              Maybe "JRΞ" needs to be literal. 
-              User said "simbolo no sale bien". Check if I used Ξ (Xi). 
-              I'll ensure it is strictly "JRΞdesign" as string. 
-              Also, user said "no parece la misma tipografia". 
-              Maybe the brand text has a specific font? 
-              In original HTML line 1 (not seen) or visually, it might be just bold.
-              I will add font-sans explicitly.
-           */}
                     <div className="text-white font-medium text-sm leading-tight tracking-tight cursor-default hidden sm:block font-sans">
                         JRΞdesign <span className="font-normal text-zinc-400 ml-2">| Diseño gráfico y Desarrollo web</span>
                     </div>
@@ -54,6 +57,14 @@ export const Navbar = () => {
                             <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-500 transition-all duration-300 group-hover:w-full" />
                         </a>
                     ))}
+
+                    {/* SWITCH DE IDIOMA - DESKTOP */}
+                    <div className="ml-4 pl-4 border-l border-zinc-700">
+                        <NeonSwitch 
+                            isChecked={isEnglish} 
+                            onChange={handleLanguageToggle} 
+                        />
+                    </div>
                 </div>
 
                 {/* Mobile Menu Button */}
@@ -66,7 +77,7 @@ export const Navbar = () => {
 
             {/* Mobile Menu Dropdown */}
             {isMobileMenuOpen && (
-                <div className="md:hidden absolute top-full left-0 right-0 bg-zinc-950/95 backdrop-blur-xl border-b border-zinc-800 p-6 flex flex-col gap-4 shadow-2xl">
+                <div className="md:hidden absolute top-full left-0 right-0 bg-zinc-950/95 backdrop-blur-xl border-b border-zinc-800 p-6 flex flex-col gap-6 shadow-2xl items-center">
                     {navLinks.map((link) => (
                         <a
                             key={link.name}
@@ -77,6 +88,15 @@ export const Navbar = () => {
                             {link.name}
                         </a>
                     ))}
+                    
+                    {/* SWITCH DE IDIOMA - MOBILE */}
+                    <div className="mt-2 pt-4 border-t border-zinc-800 w-full flex justify-center flex-col items-center gap-2">
+                        <span className="text-zinc-500 text-xs uppercase tracking-widest">Idioma / Language</span>
+                        <NeonSwitch 
+                            isChecked={isEnglish} 
+                            onChange={handleLanguageToggle} 
+                        />
+                    </div>
                 </div>
             )}
         </nav>
