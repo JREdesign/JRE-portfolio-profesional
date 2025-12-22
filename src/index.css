@@ -6,8 +6,23 @@
 
 @layer utilities {
   .bg-grid-pattern {
-    background-image: radial-gradient(#52525b 1px, transparent 1px);
-    background-size: 32px 32px;
+    /* Fondo base por si acaso */
+    background-color: #06080d;
+    
+    background-image: 
+      /* CAPA 1 (Arriba): Puntos blancos.*/
+      radial-gradient(rgb(255, 255, 255) 1px, transparent 1px),
+      
+      /* CAPA 2 (Medio): El Glow Azulado centrado */
+      radial-gradient(circle at 50% 40%, hsla(210, 94%, 58%, 0.26) 0%, transparent 60%),
+      
+      /* CAPA 3 (Fondo): El degradado negro original */
+      linear-gradient(to bottom, #111111 0%, #06080d 100%);
+
+    /* Tamaño: 32px para los puntos (para que no estén muy separados) y 100% para el resto */
+    background-size: 32px 32px, 100% 100%, 100% 100%;
+    
+    background-position: center;
   }
 }
 
@@ -618,3 +633,4 @@
   box-shadow: 0 0 20px rgba(244, 114, 182, 0.6);
   animation: pulse-electric-pink 2s infinite;
 }
+
