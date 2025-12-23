@@ -60,6 +60,177 @@ export const AI_TOOLS = [
     { name: "Claude", icon: claude }
 ];
 
+/* -------------------------------------------------------
+   1) DICCIONARIO CENTRAL DE CATEGORÍAS (NORMALIZADAS)
+   (Restaurado tal y como estaba en consts-antiguo.js)
+-------------------------------------------------------- */
+
+export const CATEGORIES = {
+    "graphic-design": {
+        key: "graphic-design",
+        label: "DISEÑO GRÁFICO",
+        order: 10,
+        hint: "Cartelería, piezas impresas, stands e identidad aplicada (no puramente digital interactivo).",
+        includes: ["Cartelería", "Stands", "Piezas impresas", "Identidad aplicada", "Material corporativo impreso"]
+    },
+    branding: {
+        key: "branding",
+        label: "BRANDING",
+        order: 20,
+        hint: "Identidad de marca: logos, sistemas visuales, identidad corporativa y aplicaciones.",
+        includes: ["Logos", "Sistemas visuales", "Identidad corporativa", "Aplicaciones de marca", "Guías de estilo / Brandbook"]
+    },
+    "ui-ux": {
+        key: "ui-ux",
+        label: "UI / UX",
+        order: 30,
+        hint: "Diseño de interfaces y experiencia: dashboards, productos digitales y apps conceptuales.",
+        includes: ["Dashboards", "Productos digitales", "Apps conceptuales", "Wireframes / Prototipos", "Sistemas de diseño UI"]
+    },
+    "web-dev": {
+        key: "web-dev",
+        label: "DESARROLLO WEB",
+        order: 40,
+        hint: "Frontend-oriented: implemento diseño con tecnologías modernas (React, WebGL/Three, etc.).",
+        includes: ["HTML / CSS", "Frontend moderno", "React / Next", "WebGL / Three.js", "Algo de backend (cuando aplica)"]
+    },
+    editorial: {
+        key: "editorial",
+        label: "EDITORIAL",
+        order: 50,
+        hint: "Maquetación y publicaciones cuando el peso editorial es protagonista (revistas, publicaciones, retículas).",
+        includes: ["Revistas", "Maquetación de publicaciones", "Retículas / Composición editorial", "Dirección de arte editorial", "Preparación para imprenta"]
+    },
+    other: {
+        key: "other",
+        label: "OTROS",
+        order: 60,
+        hint: "Proyectos especiales, híbridos o difíciles de encajar en una categoría principal.",
+        includes: ["Otros", "Especiales", "Experimentales", "Híbridos"]
+    }
+};
+
+export const CATEGORY_LIST = Object.values(CATEGORIES).sort((a, b) => a.order - b.order);
+export const CATEGORY_KEYS = CATEGORY_LIST.map((c) => c.key);
+
+const _JRE_ALLOWED_CATS = new Set(["branding", "graphic-design", "editorial", "ui-ux", "web-dev", "other"]);
+const _JRE_CATEGORY_ALIASES = {
+    // Branding
+    brand: "branding",
+    branding: "branding",
+    identidad: "branding",
+    "identidad-visual": "branding",
+    "identidad-corporativa": "branding",
+    logo: "branding",
+    logos: "branding",
+
+    // Diseño gráfico
+    "diseño": "graphic-design",
+    "diseno": "graphic-design",
+    "diseño-grafico": "graphic-design",
+    "diseno-grafico": "graphic-design",
+    graphic: "graphic-design",
+    "graphic-design": "graphic-design",
+    design: "graphic-design",
+    print: "graphic-design",
+    impresos: "graphic-design",
+    carteleria: "graphic-design",
+    "cartelería": "graphic-design",
+    stands: "graphic-design",
+
+    // Alias útiles para “Social Media” si se quedó colado en algún sitio
+    social: "graphic-design",
+    "social-media": "graphic-design",
+    socialmedia: "graphic-design",
+    rrss: "graphic-design",
+    "redes-sociales": "graphic-design",
+
+    // Editorial
+    editorial: "editorial",
+    maquetacion: "editorial",
+    "maquetación": "editorial",
+    revista: "editorial",
+    revistas: "editorial",
+    publicacion: "editorial",
+    "publicación": "editorial",
+    publicaciones: "editorial",
+
+    // UI/UX
+    "ui-ux": "ui-ux",
+    uiux: "ui-ux",
+    uiuxdesign: "ui-ux",
+    "ui/ux": "ui-ux",
+    ui: "ui-ux",
+    ux: "ui-ux",
+    product: "ui-ux",
+    "producto-digital": "ui-ux",
+    dashboard: "ui-ux",
+    dashboards: "ui-ux",
+    app: "ui-ux",
+    apps: "ui-ux",
+
+    // Web dev
+    web: "web-dev",
+    "web-dev": "web-dev",
+    desarrollo: "web-dev",
+    development: "web-dev",
+    frontend: "web-dev",
+    "front-end": "web-dev",
+    react: "web-dev",
+    three: "web-dev",
+    threejs: "web-dev",
+    "three-js": "web-dev",
+    webgl: "web-dev",
+    html: "web-dev",
+    css: "web-dev",
+    javascript: "web-dev",
+
+    // Otros
+    other: "other",
+    otros: "other",
+    especiales: "other",
+    especial: "other",
+    misc: "other"
+};
+
+function _slugifyCategory(raw) {
+    return String(raw || "")
+        .trim()
+        .toLowerCase()
+        .replace(/\s+/g, "-")
+        .replace(/[–—_]/g, "-")
+        .replace(/\/+/g, "-");
+}
+
+export function normalizeCategoryKey(raw) {
+    const slug = _slugifyCategory(raw);
+    if (_JRE_ALLOWED_CATS.has(slug)) return slug;
+    if (_JRE_CATEGORY_ALIASES[slug]) return _JRE_CATEGORY_ALIASES[slug];
+    return "other";
+}
+
+export function normalizeCategoryArray(arr) {
+    const input = Array.isArray(arr) ? arr : [];
+    const normalized = input.map(normalizeCategoryKey).filter(Boolean);
+    const seen = new Set();
+    const unique = [];
+    for (const c of normalized) {
+        if (!seen.has(c)) {
+            seen.add(c);
+            unique.push(c);
+        }
+    }
+    return unique.length ? unique : ["other"];
+}
+
+const normalizeProject = (project) => ({ ...project, categories: normalizeCategoryArray(project.categories) });
+const normalizeProjectsList = (list) => (Array.isArray(list) ? list.map(normalizeProject) : []);
+
+/* -------------------------------------------------------
+   2) TRANSLATIONS (se mantiene la estructura del agente)
+   Solo se corrige: categorías + keys + asignación por proyecto
+-------------------------------------------------------- */
+
 export const TRANSLATIONS = {
     es: {
         navbar: {
@@ -184,20 +355,67 @@ export const TRANSLATIONS = {
             modal_details_title: "Diseño y acabado",
             modal_no_details: "Detalles de diseño no disponibles.",
             modal_gallery: "Galería (Clic para ampliar)",
+
+            // Restaurado: 6 categorías exactas + keys originales
             categories: [
-                { id: 1, key: "branding", label: "Branding", order: 2, hint: "Identidad visual completa y estrategia de marca.", includes: ["Logotipo", "Paleta de colores", "Tipografía", "Manual de marca"] },
-                { id: 2, key: "editorial", label: "Editorial", order: 3, hint: "Diseño de publicaciones impresas y digitales.", includes: ["Revistas", "Libros", "Catálogos", "Memorias anuales"] },
-                { id: 3, key: "uiux", label: "UI/UX", order: 4, hint: "Diseño de interfaces y experiencia de usuario.", includes: ["App Design", "Web Design", "Prototipado", "User Flow"] },
-                { id: 4, key: "development", label: "Development", order: 5, hint: "Desarrollo web y soluciones tecnológicas.", includes: ["React", "Node.js", "Full-stack", "Web 3D"] },
-                { id: 5, key: "social", label: "Social Media", order: 6, hint: "Contenido estratégico para redes sociales.", includes: ["Posts", "Stories", "Ads", "Templates"] }
+                {
+                    id: 1,
+                    key: "branding",
+                    label: "BRANDING",
+                    order: 20,
+                    hint: "Identidad de marca: logos, sistemas visuales, identidad corporativa y aplicaciones.",
+                    includes: ["Logos", "Sistemas visuales", "Identidad corporativa", "Aplicaciones de marca", "Guías de estilo / Brandbook"]
+                },
+                {
+                    id: 2,
+                    key: "graphic-design",
+                    label: "DISEÑO GRÁFICO",
+                    order: 10,
+                    hint: "Cartelería, piezas impresas, stands e identidad aplicada (no puramente digital interactivo).",
+                    includes: ["Cartelería", "Stands", "Piezas impresas", "Identidad aplicada", "Material corporativo impreso"]
+                },
+                {
+                    id: 3,
+                    key: "editorial",
+                    label: "EDITORIAL",
+                    order: 50,
+                    hint: "Maquetación y publicaciones cuando el peso editorial es protagonista (revistas, publicaciones, retículas).",
+                    includes: ["Revistas", "Maquetación de publicaciones", "Retículas / Composición editorial", "Dirección de arte editorial", "Preparación para imprenta"]
+                },
+                {
+                    id: 4,
+                    key: "ui-ux",
+                    label: "UI / UX",
+                    order: 30,
+                    hint: "Diseño de interfaces y experiencia: dashboards, productos digitales y apps conceptuales.",
+                    includes: ["Dashboards", "Productos digitales", "Apps conceptuales", "Wireframes / Prototipos", "Sistemas de diseño UI"]
+                },
+                {
+                    id: 5,
+                    key: "web-dev",
+                    label: "DESARROLLO WEB",
+                    order: 40,
+                    hint: "Frontend-oriented: implemento diseño con tecnologías modernas (React, WebGL/Three, etc.).",
+                    includes: ["HTML / CSS", "Frontend moderno", "React / Next", "WebGL / Three.js", "Algo de backend (cuando aplica)"]
+                },
+                {
+                    id: 6,
+                    key: "other",
+                    label: "OTROS",
+                    order: 60,
+                    hint: "Proyectos especiales, híbridos o difíciles de encajar en una categoría principal.",
+                    includes: ["Otros", "Especiales", "Experimentales", "Híbridos"]
+                }
             ],
-            list: [
+
+            // Restaurado: categorías por proyecto como en consts-antiguo.js
+            list: normalizeProjectsList([
                 {
                     id: 1,
                     title: "Apex Finance",
                     subtitle: "UI/UX Dashboard",
                     tag: "UI/UX",
-                    categories: ["uiux"],
+                    categories: ["ui-ux", "web-dev"],
                     isNew: true,
                     image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1600&auto=format&fit=crop",
                     description: "Diseño de interfaz para una plataforma de trading. Nos enfocamos en la legibilidad de datos en tiempo real y en un modo oscuro nativo.",
@@ -221,7 +439,7 @@ export const TRANSLATIONS = {
                     title: "Zenith Web",
                     subtitle: "Web corporativa 3D",
                     tag: "Development",
-                    categories: ["development"],
+                    categories: ["web-dev", "ui-ux"],
                     isNew: true,
                     image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1600&auto=format&fit=crop",
                     description: "Sitio web inmersivo desarrollado con React y Three.js.",
@@ -233,7 +451,7 @@ export const TRANSLATIONS = {
                     title: "Echo Packaging",
                     subtitle: "Packaging sostenible",
                     tag: "Branding",
-                    categories: ["branding"],
+                    categories: ["branding", "graphic-design"],
                     isFeatured: true,
                     image: "https://images.unsplash.com/photo-1632515904664-88421d097966?q=80&w=1600&auto=format&fit=crop",
                     description: "Diseño de empaques biodegradables para cosmética orgánica.",
@@ -245,7 +463,7 @@ export const TRANSLATIONS = {
                     title: "Velocita App",
                     subtitle: "App de movilidad",
                     tag: "Product",
-                    categories: ["uiux"],
+                    categories: ["ui-ux"],
                     isFeatured: true,
                     image: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?q=80&w=1600&auto=format&fit=crop",
                     description: "Aplicación móvil para alquiler de vehículos eléctricos.",
@@ -257,7 +475,7 @@ export const TRANSLATIONS = {
                     title: "Gecko Aventura",
                     subtitle: "Identidad visual & branding",
                     tag: "Branding",
-                    categories: ["branding"],
+                    categories: ["branding", "graphic-design", "web-dev"],
                     isFeatured: true,
                     image: "https://jredesigner.wordpress.com/wp-content/uploads/2025/03/gecko-promo.png",
                     description: "Branding corporativo para Gecko Aventura orientado a construir una identidad visual moderna...",
@@ -272,7 +490,7 @@ export const TRANSLATIONS = {
                         "https://jredesigner.wordpress.com/wp-content/uploads/2025/11/gecko-webpage.png"
                     ]
                 }
-            ]
+            ])
         },
         services: {
             title: "Servicios",
@@ -350,6 +568,7 @@ export const TRANSLATIONS = {
             ]
         }
     },
+
     en: {
         navbar: {
             title: "JRΞdesign",
@@ -473,20 +692,66 @@ export const TRANSLATIONS = {
             modal_details_title: "Design and finish",
             modal_no_details: "Design details not available.",
             modal_gallery: "Gallery (Click to enlarge)",
+
+            // Same 6 categories + original keys (EN version)
             categories: [
-                { id: 1, key: "branding", label: "Branding", order: 2, hint: "Complete visual identity and brand strategy.", includes: ["Logo", "Color Palette", "Typography", "Brand Manual"] },
-                { id: 2, key: "editorial", label: "Editorial", order: 3, hint: "Layout for print and digital publications.", includes: ["Magazines", "Books", "Catalogs", "Annual Reports"] },
-                { id: 3, key: "uiux", label: "UI/UX", order: 4, hint: "Interface design and user experience.", includes: ["App Design", "Web Design", "Prototyping", "User Flow"] },
-                { id: 4, key: "development", label: "Development", order: 5, hint: "Web development and technological solutions.", includes: ["React", "Node.js", "Full-stack", "3D Web"] },
-                { id: 5, key: "social", label: "Social Media", order: 6, hint: "Strategic content for social networks.", includes: ["Posts", "Stories", "Ads", "Templates"] }
+                {
+                    id: 1,
+                    key: "branding",
+                    label: "BRANDING",
+                    order: 20,
+                    hint: "Brand identity: logos, visual systems, corporate identity and applications.",
+                    includes: ["Logos", "Visual systems", "Corporate identity", "Brand applications", "Style guides / Brandbook"]
+                },
+                {
+                    id: 2,
+                    key: "graphic-design",
+                    label: "GRAPHIC DESIGN",
+                    order: 10,
+                    hint: "Posters, printed pieces, stands and applied identity (not purely interactive digital).",
+                    includes: ["Posters", "Stands", "Printed pieces", "Applied identity", "Printed corporate materials"]
+                },
+                {
+                    id: 3,
+                    key: "editorial",
+                    label: "EDITORIAL",
+                    order: 50,
+                    hint: "Layout and publications where editorial weight is key (magazines, publications, grids).",
+                    includes: ["Magazines", "Publication layout", "Grids / Editorial composition", "Editorial art direction", "Print-ready preparation"]
+                },
+                {
+                    id: 4,
+                    key: "ui-ux",
+                    label: "UI / UX",
+                    order: 30,
+                    hint: "Interface & experience design: dashboards, digital products and conceptual apps.",
+                    includes: ["Dashboards", "Digital products", "Conceptual apps", "Wireframes / Prototypes", "UI design systems"]
+                },
+                {
+                    id: 5,
+                    key: "web-dev",
+                    label: "WEB DEVELOPMENT",
+                    order: 40,
+                    hint: "Frontend-oriented: I implement design with modern technologies (React, WebGL/Three, etc.).",
+                    includes: ["HTML / CSS", "Modern frontend", "React / Next", "WebGL / Three.js", "Some backend (when needed)"]
+                },
+                {
+                    id: 6,
+                    key: "other",
+                    label: "OTHER",
+                    order: 60,
+                    hint: "Special, hybrid or hard-to-classify projects.",
+                    includes: ["Other", "Special", "Experimental", "Hybrid"]
+                }
             ],
-            list: [
+
+            list: normalizeProjectsList([
                 {
                     id: 1,
                     title: "Apex Finance",
                     subtitle: "UI/UX Dashboard",
                     tag: "UI/UX",
-                    categories: ["uiux"],
+                    categories: ["ui-ux", "web-dev"],
                     isNew: true,
                     image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1600&auto=format&fit=crop",
                     description: "Interface design for a trading platform. We focused on real-time data readability and a native dark mode.",
@@ -510,7 +775,7 @@ export const TRANSLATIONS = {
                     title: "Zenith Web",
                     subtitle: "3D Corporate Web",
                     tag: "Development",
-                    categories: ["development"],
+                    categories: ["web-dev", "ui-ux"],
                     isNew: true,
                     image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1600&auto=format&fit=crop",
                     description: "Immersive website developed with React and Three.js.",
@@ -522,7 +787,7 @@ export const TRANSLATIONS = {
                     title: "Echo Packaging",
                     subtitle: "Sustainable Packaging",
                     tag: "Branding",
-                    categories: ["branding"],
+                    categories: ["branding", "graphic-design"],
                     isFeatured: true,
                     image: "https://images.unsplash.com/photo-1632515904664-88421d097966?q=80&w=1600&auto=format&fit=crop",
                     description: "Design of biodegradable packaging for organic cosmetics.",
@@ -534,7 +799,7 @@ export const TRANSLATIONS = {
                     title: "Velocita App",
                     subtitle: "Mobility App",
                     tag: "Product",
-                    categories: ["uiux"],
+                    categories: ["ui-ux"],
                     isFeatured: true,
                     image: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?q=80&w=1600&auto=format&fit=crop",
                     description: "Mobile app for electric vehicle rental.",
@@ -546,7 +811,7 @@ export const TRANSLATIONS = {
                     title: "Gecko Aventura",
                     subtitle: "Visual Identity & Branding",
                     tag: "Branding",
-                    categories: ["branding"],
+                    categories: ["branding", "graphic-design", "web-dev"],
                     isFeatured: true,
                     image: "https://jredesigner.wordpress.com/wp-content/uploads/2025/03/gecko-promo.png",
                     description: "Corporate branding for Gecko Aventura aimed at building a modern visual identity...",
@@ -561,7 +826,7 @@ export const TRANSLATIONS = {
                         "https://jredesigner.wordpress.com/wp-content/uploads/2025/11/gecko-webpage.png"
                     ]
                 }
-            ]
+            ])
         },
         services: {
             title: "Services",
