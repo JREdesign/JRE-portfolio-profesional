@@ -1,6 +1,15 @@
 import React, { useRef, useEffect } from 'react';
 import { Section } from '../ui/Section';
 import { useLanguage } from '../../context/LanguageContext';
+import { LuBriefcase, LuUsers, LuAward, LuStar } from 'react-icons/lu';
+
+// Mapa para renderizar el icono correcto basado en el string del .js
+const IconMap = {
+    briefcase: LuBriefcase,
+    users: LuUsers,
+    award: LuAward,
+    star: LuStar
+};
 
 export const Timeline = () => {
     const wrapperRef = useRef(null);
@@ -14,7 +23,7 @@ export const Timeline = () => {
         const domItems = wrapper.querySelectorAll(".timeline-item");
         let electricEffectTriggered = false;
 
-        // VISIBILITY OBSERVER (Fade in on scroll)
+        // Observador para el efecto de aparición (fade-in)
         const observer = new IntersectionObserver((entries, obs) => {
             entries.forEach((entry) => {
                 if (entry.isIntersecting) {
@@ -26,11 +35,11 @@ export const Timeline = () => {
 
         domItems.forEach((el) => observer.observe(el));
 
-        // PROGRESS LINE LOGIC
+        // Lógica de la línea de progreso y estados activos
         const updateProgress = () => {
             const rect = wrapper.getBoundingClientRect();
             const windowHeight = window.innerHeight;
-            const triggerPoint = windowHeight * 0.55; // 55% of viewport
+            const triggerPoint = windowHeight * 0.55;
             const wrapperTop = rect.top;
             const wrapperHeight = rect.height;
 
@@ -43,8 +52,7 @@ export const Timeline = () => {
 
             domItems.forEach((itemEl) => {
                 const itemRect = itemEl.getBoundingClientRect();
-                const itemTop = itemRect.top; // Relative to viewport
-
+                const itemTop = itemRect.top;
                 const isReached = triggerPoint > itemTop + 50;
 
                 if (itemEl.dataset.electric === "true") {
@@ -72,7 +80,27 @@ export const Timeline = () => {
 
     return (
         <Section id="trayectoria" title={t.timeline.title} titleCenter={false}>
-            {/* SVG Filter for Electric Effect (Hidden Global Definition) */}
+            
+            {/* --- BLOQUE DE ESTADÍSTICAS (Nuevo) --- */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-20 w-full">
+                {t.timeline.stats && t.timeline.stats.map((stat, index) => {
+                    const IconComponent = IconMap[stat.icon];
+                    return (
+                        <div key={index} className="flex flex-col items-center text-center">
+                            {/* Renderizado dinámico del icono de react-icons */}
+                            {IconComponent && <IconComponent className="w-8 h-8 text-blue-500 mb-4" />}
+                            <span className="text-3xl md:text-4xl font-bold text-white mb-2">
+                                {stat.value}
+                            </span>
+                            <span className="text-sm text-zinc-400">
+                                {stat.label}
+                            </span>
+                        </div>
+                    );
+                })}
+            </div>
+
+            {/* SVG Filter para el efecto eléctrico */}
             <svg style={{ position: 'absolute', width: 0, height: 0, overflow: 'hidden' }} aria-hidden="true">
                 <defs>
                     <filter id="turbulent-displace" x="-20%" y="-20%" width="140%" height="140%">
@@ -127,7 +155,9 @@ export const Timeline = () => {
 
                             <div className="relative z-10 flex flex-col md:flex-row gap-6 mr-auto items-start w-full">
                                 <div className="logo-container">
-                                    <span className="text-xs font-mono text-zinc-500">{item.company.substring(0, 2).toUpperCase()}</span>
+                                    <span className="text-xs font-mono text-zinc-500">
+                                        {item.company.substring(0, 2).toUpperCase()}
+                                    </span>
                                 </div>
                                 <div className="text-container">
                                     <span className={`${item.isElectric ? "text-blue-300" : "text-blue-400"} font-mono text-xs font-bold tracking-wide uppercase mb-2 block`}>

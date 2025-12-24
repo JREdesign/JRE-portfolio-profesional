@@ -1,6 +1,12 @@
 export const timelineData = {
     es: {
         title: "Trayectoria",
+        stats: [
+            { label: "Proyectos Completados", value: "50+", icon: "briefcase" },
+            { label: "Años de Experiencia", value: "8+", icon: "users" },
+            { label: "Experiencia Verificada", value: "Institucional", icon: "award" },
+            { label: "Clientes satisfechos", value: "35+", icon: "star" }
+        ],
         list: [
             {
                 id: 1,
@@ -56,6 +62,12 @@ export const timelineData = {
     },
     en: {
         title: "Experience",
+        stats: [
+            { label: "Projects Completed", value: "50+", icon: "briefcase" },
+            { label: "Years of Experience", value: "8+", icon: "users" },
+            { label: "Verified Experience", value: "Institutional", icon: "award" },
+            { label: "Happy Clients", value: "35+", icon: "star" }
+        ],
         list: [
             {
                 id: 1,

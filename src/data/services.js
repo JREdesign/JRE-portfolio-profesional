@@ -10,10 +10,13 @@ export const servicesData = {
             { id: 4, number: "04", title: "Soporte Continuo", description: "Te acompaño en la implementación y evolución de tu identidad visual." }
         ],
         list: [
-            { id: 1, title: "Diseño UI", description: "Interfaces limpias y modernas que comunican la identidad de tu marca." },
-            { id: 2, title: "Desarrollo", description: "Código limpio, rápido y escalable usando las últimas tecnologías." },
-            { id: 3, title: "Branding", description: "Identidades visuales completas, desde el logo hasta la guía de estilo." },
-            { id: 4, title: "Editorial", description: "Todo tipo de publicaciones: revistas, catálogos, libros y más." }
+            { id: 1, title: "Diseño UI", icon: "ui", description: "Interfaces limpias y modernas que comunican la identidad de tu marca." },
+            { id: 2, title: "Desarrollo", icon: "dev", description: "Código limpio, rápido y escalable usando las últimas tecnologías." },
+            { id: 3, title: "Branding", icon: "brand", description: "Identidades visuales completas, desde el logo hasta la guía de estilo." },
+            { id: 4, title: "Editorial", icon: "edit", description: "Todo tipo de publicaciones: revistas, catálogos, libros y más." },
+            { id: 5, title: "Consultoría", icon: "compass", description: "Evaluación y dirección estratégica de diseño para alinear marca, producto y comunicación." },
+            { id: 6, title: "Sistemas de Diseño", icon: "system", description: "Definición de sistemas visuales completos y reutilizables para todo tipo de proyectos." }
+
         ]
     },
     en: {
@@ -27,10 +30,12 @@ export const servicesData = {
             { id: 4, number: "04", title: "Continuous Support", description: "I accompany you in the implementation and evolution of your visual identity." }
         ],
         list: [
-            { id: 1, title: "UI Design", description: "Clean and modern interfaces that communicate your brand's identity." },
-            { id: 2, title: "Development", description: "Clean, fast, and scalable code using the latest technologies." },
-            { id: 3, title: "Branding", description: "Complete visual identities, from logo to style guide." },
-            { id: 4, title: "Editorial", description: "All types of publications: magazines, catalogs, books, and more." }
+            { id: 1, title: "UI Design", icon: "ui", description: "Clean and modern interfaces that communicate your brand's identity." },
+            { id: 2, title: "Development", icon: "dev", description: "Clean, fast, and scalable code using the latest technologies." },
+            { id: 3, title: "Branding", icon: "brand", description: "Complete visual identities, from logo to style guide." },
+            { id: 4, title: "Editorial", icon: "edit", description: "All types of publications: magazines, catalogs, books, and more." },
+            { id: 5, title: "Consulting", icon: "compass", description: "Strategic design evaluation and direction to align brand, product, and communication." },
+            { id: 6, title: "Design Systems", icon: "system", description: "Definition of complete, reusable visual systems across all kinds of projects." }
         ]
     }
 };

@@ -1,7 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { Layout, Code, BadgeCheck } from './Icons';
 
-// --- FUNCIONES MATEMÁTICAS ---
+// --- FUNCIONES MATEMÁTICAS (Necesarias para ambos componentes) ---
 const clamp = (value, min = 0, max = 100) => Math.min(Math.max(value, min), max);
 const round = (value, precision = 3) => parseFloat(value.toFixed(precision));
 const centerOfElement = (el) => { const { width, height } = el.getBoundingClientRect(); return [width / 2, height / 2]; };
@@ -19,7 +18,6 @@ const pointerPositionRelativeToElement = (el, e) => {
     return { pixels: [x, y], percent: [clamp((100 / width) * x), clamp((100 / height) * y)] };
 };
 
-// --- HOOK DE INTERSECCIÓN (Internal reused one) ---
 const useInView = (options) => {
     const ref = useRef(null);
     const [isInView, setIsInView] = useState(false);
@@ -33,12 +31,13 @@ const useInView = (options) => {
     return [ref, isInView];
 };
 
+// --- 1. COMPONENTE CardStyle (El que te faltaba y causaba el error) ---
 export const CardStyle = ({ icon: Icon, title, description, delay, centered = true }) => {
     const [ref, isInView] = useInView({ threshold: 0.2 });
     return (
         <div ref={ref} className={`transition-all duration-700 transform ${isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`} style={{ transitionDelay: `${delay}ms` }}>
             <div className={`flex flex-col ${centered ? "items-center text-center" : "items-start text-left"} justify-center p-8 h-full min-h-[280px] rounded-2xl border border-blue-500/60 bg-[linear-gradient(to_bottom,#111111_0%,#06080d_100%)] transition-all duration-300 hover:shadow-[0_0_20px_rgba(59,130,246,0.4)] group hover:-translate-y-1`}>
-                <Icon className={"w-12 h-12 text-white mb-6 stroke-[1.5] group-hover:scale-110 transition-transform duration-300"} />
+                {Icon && <Icon className={"w-12 h-12 text-white mb-6 stroke-[1.5] group-hover:scale-110 transition-transform duration-300"} />}
                 <h3 className="text-white font-bold text-xl mb-3 leading-tight whitespace-pre-line">{title}</h3>
                 {description && <p className="text-zinc-400 text-sm leading-relaxed">{description}</p>}
             </div>
@@ -46,7 +45,8 @@ export const CardStyle = ({ icon: Icon, title, description, delay, centered = tr
     );
 };
 
-export const GlowingServiceCard = ({ title, description, delay }) => {
+// --- 2. COMPONENTE GlowingServiceCard (El que usamos en Servicios) ---
+export const GlowingServiceCard = ({ title, description, delay, icon: Icon }) => {
     const cardRef = useRef(null);
     const [ref, isInView] = useInView({ threshold: 0.2 });
 
@@ -70,13 +70,7 @@ export const GlowingServiceCard = ({ title, description, delay }) => {
             <div ref={cardRef} className="glowing-card group" onPointerMove={handlePointerMove}>
                 <span className="glow" />
                 <div className="inner">
-                    {title.includes("UI") ? (
-                        <Layout className="w-12 h-12 text-blue-400 mb-4 stroke-[1.5]" />
-                    ) : title.includes("Code") || title.includes("Development") ? (
-                        <Code className="w-12 h-12 text-blue-400 mb-4 stroke-[1.5]" />
-                    ) : (
-                        <BadgeCheck className="w-12 h-12 text-blue-400 mb-4 stroke-[1.5]" />
-                    )}
+                    {Icon && <Icon className="w-12 h-12 text-blue-400 mb-4 stroke-[1.5]" />}
                     <h3 className="text-white font-bold text-2xl mb-4">{title}</h3>
                     <p className="text-zinc-400 text-sm leading-relaxed">{description}</p>
                 </div>
