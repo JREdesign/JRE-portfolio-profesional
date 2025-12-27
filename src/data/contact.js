@@ -68,7 +68,7 @@ export const contactData = {
         info_location_text: "Madrid, Spain",
         info_location_sub: "Global remote availability",
         info_email_title: "Email",
-        info_email_sub: "Fast support",
+        info_email_sub: "Quick support",
         info_hours_title: "Hours",
         info_hours_text: "Monday - Friday: 9:00 - 15:00 (CET)",
         info_hours_sub: "Weekend emergencies",
@@ -94,7 +94,7 @@ export const contactData = {
             "I'm not sure"
         ],
         form_details: "Project details *",
-        form_details_placeholder: "Describe your project...",
+        form_details_placeholder: "Describe your project: objectives, audience, preferred style...",
         form_submit: "Send Message",
         links: [
             { id: 1, label: "Behance", description: "Visual Portfolio", url: "#" },
