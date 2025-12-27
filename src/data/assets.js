@@ -25,6 +25,7 @@ import gpt from '../assets/gpt.svg';
 import gemini from '../assets/gemini.svg';
 import claude from '../assets/claude.svg';
 import wordpress from '../assets/wordpress.svg';
+import perplexity from '../assets/perplexity.svg';
 
 export const ASSETS = {
     logo: jreLogo,
@@ -60,5 +61,6 @@ export const AI_TOOLS = [
     { name: "Antigravity", icon: antigravity },
     { name: "GPT", icon: gpt },
     { name: "Gemini", icon: gemini },
-    { name: "Claude", icon: claude }
+    { name: "Claude", icon: claude },
+    { name: "Perplexity", icon: perplexity }
 ];
